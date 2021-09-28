@@ -1,5 +1,5 @@
-select * from faculty;
+select * from faculties;
 
-insert into faculty (faculty_name) values ('IT');
-insert into faculty (faculty_name) values ('HR');
-insert into faculty (faculty_name) values ('QA');
+insert into faculties (faculty_name) values ('IT');
+insert into faculties (faculty_name) values ('HR');
+insert into faculties (faculty_name) values ('QA');
