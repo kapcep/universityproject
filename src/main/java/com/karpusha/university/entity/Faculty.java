@@ -3,7 +3,7 @@ package com.karpusha.university.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "faculty")
+@Table(name = "faculties")
 public class Faculty {
 
     @Id
