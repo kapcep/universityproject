@@ -1,8 +1,6 @@
 package com.karpusha.university;
 
-import com.karpusha.university.entity.Faculty;
-import com.karpusha.university.entity.Student;
-import com.karpusha.university.entity.StudentGroup;
+import com.karpusha.university.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -10,10 +8,11 @@ import org.hibernate.cfg.Configuration;
 public class HibernateTestMain {
     public static void main(String[] args) {
 
-        saveFaculty(getSessionFactory(),new Faculty("TT"));
+//        saveFaculty(getSessionFactory(),new Faculty("CTO"));
 //        saveStudentGroup(getSessionFactory(),new StudentGroup("BD-2"));
 //        saveStudent(getSessionFactory(),new Student("Iurii","Likov",28));
-
+//        saveDepartment(getSessionFactory(),new Department("Deep Dev"));
+        saveTeacher(getSessionFactory(), new Teacher("Olena", "Linkerman", 35));
 
     }
 
@@ -22,6 +21,8 @@ public class HibernateTestMain {
                 .addAnnotatedClass(Faculty.class)
                 .addAnnotatedClass(StudentGroup.class)
                 .addAnnotatedClass(Student.class)
+                .addAnnotatedClass(Department.class)
+                .addAnnotatedClass(Teacher.class)
                 .buildSessionFactory();
     }
 
@@ -67,5 +68,36 @@ public class HibernateTestMain {
             factory.close();
         }
     }
+
+    private static void saveDepartment(SessionFactory factory, Department department) {
+        Session session = null;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            Faculty faculty = session.get(Faculty.class, 2);
+            department.setFaculty(faculty);
+            session.save(department);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
+        }
+    }
+
+    private static void saveTeacher(SessionFactory factory, Teacher teacher) {
+        Session session = null;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            Department department = session.get(Department.class, 1);
+            teacher.setDepartment(department);
+            session.save(teacher);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
+        }
+    }
+
 }
 

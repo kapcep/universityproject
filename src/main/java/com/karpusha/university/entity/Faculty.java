@@ -19,6 +19,10 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty")
     private List<StudentGroup> studentGroups;
 
+    @OneToMany(mappedBy = "faculty")
+    private List<Department> departments;
+
+
     public Faculty() {
     }
 
@@ -40,6 +44,14 @@ public class Faculty {
         }
         studentGroups.add(studentGroup);
         studentGroup.setFaculty(this);
+    }
+
+    public void addDepartmentToFaculty(Department department) {
+        if (department == null) {
+            departments = new ArrayList<>();
+        }
+        departments.add(department);
+        department.setFaculty(this);
     }
 
     public String getName() {
