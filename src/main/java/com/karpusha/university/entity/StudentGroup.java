@@ -29,7 +29,7 @@ public class StudentGroup {
         this.groupName = groupName;
     }
 
-    public void addStudentGroupToFaculty(Student student) {
+    public void addStudentToFaculty(Student student) {
         if (students == null) {
             students = new ArrayList<>();
         }
@@ -60,5 +60,9 @@ public class StudentGroup {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    public List<Student> getStudents() {
+        return students;
     }
 }

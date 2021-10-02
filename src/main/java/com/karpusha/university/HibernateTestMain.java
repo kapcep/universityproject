@@ -9,10 +9,10 @@ public class HibernateTestMain {
     public static void main(String[] args) {
 
 //        saveFaculty(getSessionFactory(),new Faculty("CTO"));
-//        saveStudentGroup(getSessionFactory(),new StudentGroup("BD-2"));
+        saveStudentGroup(getSessionFactory(),new StudentGroup("BD-2"));
 //        saveStudent(getSessionFactory(),new Student("Iurii","Likov",28));
 //        saveDepartment(getSessionFactory(),new Department("Deep Dev"));
-        saveTeacher(getSessionFactory(), new Teacher("Olena", "Linkerman", 35));
+//        saveTeacher(getSessionFactory(), new Teacher("Olena", "Linkerman", 35));
 
     }
 

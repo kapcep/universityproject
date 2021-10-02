@@ -57,10 +57,6 @@ public class Department {
         return teachers;
     }
 
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
-    }
-
     public Faculty getFaculty() {
         return faculty;
     }
@@ -68,4 +64,6 @@ public class Department {
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
     }
+
+
 }

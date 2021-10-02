@@ -47,7 +47,7 @@ public class Faculty {
     }
 
     public void addDepartmentToFaculty(Department department) {
-        if (department == null) {
+        if (departments == null) {
             departments = new ArrayList<>();
         }
         departments.add(department);
@@ -60,6 +60,14 @@ public class Faculty {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<StudentGroup> getStudentGroups() {
+        return studentGroups;
+    }
+
+    public List<Department> getDepartments() {
+        return departments;
     }
 
     @Override
