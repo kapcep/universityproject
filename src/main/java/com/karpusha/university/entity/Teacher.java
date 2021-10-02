@@ -37,9 +37,9 @@ public class Teacher {
         return id;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTeacherName() {
         return teacherName;
@@ -71,5 +71,15 @@ public class Teacher {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", teacherName='" + teacherName + '\'' +
+                ", teacherSurName='" + teacherSurName + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

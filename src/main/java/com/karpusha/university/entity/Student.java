@@ -39,9 +39,9 @@ public class Student {
         return id;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getStudentName() {
         return studentName;
@@ -73,5 +73,15 @@ public class Student {
 
     public void setStudentGroup(StudentGroup studentGroup) {
         this.studentGroup = studentGroup;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", studentName='" + studentName + '\'' +
+                ", studentSurName='" + studentSurName + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

@@ -42,9 +42,9 @@ public class StudentGroup {
         return id;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getGroupName() {
         return groupName;
@@ -64,5 +64,13 @@ public class StudentGroup {
 
     public List<Student> getStudents() {
         return students;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentGroup{" +
+                "id=" + id +
+                ", groupName='" + groupName + '\'' +
+                '}';
     }
 }

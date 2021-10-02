@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Faculty</title>
+</head>
+<body align="center">
+<h2>Update faculty</h2>
+<form action="#" th:action="@{/update/{id}(id=${faculty.id})}" th:object="${faculty}" method="post">
+    <p>Faculty Name: <input type="text" th:field="*{name}"/></p>
+    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>

@@ -34,9 +34,9 @@ public class Faculty {
         return id;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void addStudentGroupToFaculty(StudentGroup studentGroup) {
         if (studentGroups == null) {

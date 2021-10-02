@@ -31,7 +31,7 @@ public class Department {
     }
 
     public Department() {
-            }
+    }
 
     public Department(String name) {
         this.name = name;
@@ -41,9 +41,9 @@ public class Department {
         return id;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -65,5 +65,11 @@ public class Department {
         this.faculty = faculty;
     }
 
-
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
