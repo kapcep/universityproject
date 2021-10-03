@@ -39,7 +39,7 @@ public class FacultyController {
         return "redirect:/";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/editFaculty/{id}")
     public String showFacultyUpdateForm(@PathVariable("id")
                                                 int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
@@ -47,7 +47,7 @@ public class FacultyController {
         return "update-faculty";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/updateFaculty/{id}")
     public String updateFaculty(@PathVariable("id") int id, @ModelAttribute("faculty") Faculty faculty, Model model) {
 
         faculty.setId(id);
@@ -56,7 +56,7 @@ public class FacultyController {
         return "redirect:/";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/deleteFaculty/{id}")
     public String deleteFaculty(@PathVariable("id") int id, Model model) {
         facultyService.deleteFaculty(id);
         return "redirect:/";
