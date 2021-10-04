@@ -26,7 +26,7 @@ public class FacultyController {
     }
 
     @RequestMapping("/addNewFaculty")
-    public String addNewEmployee(Model model) {
+    public String addNewFaculty(Model model) {
         Faculty faculty = new Faculty();
         model.addAttribute("faculty", faculty);
 

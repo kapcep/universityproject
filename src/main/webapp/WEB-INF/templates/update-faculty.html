@@ -10,5 +10,7 @@
     <p>Faculty Name: <input type="text" th:field="*{name}"/></p>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
 </form>
+<br>
+<a th:href="@{/addNewStudentGroup/{id}(id=${faculty.id})}">Add new Student Group</a>
 </body>
 </html>

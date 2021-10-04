@@ -24,7 +24,8 @@ public class StudentGroupDaoImpl implements StudentGroupDao{
 
     @Override
     public void saveStudentGroup(StudentGroup studentGroup) {
-
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(studentGroup);
     }
 
     @Override
