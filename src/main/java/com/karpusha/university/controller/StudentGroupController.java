@@ -61,8 +61,13 @@ public class StudentGroupController {
     @PostMapping("/updateStudentGroup/{studentGroupId}")
     public String updateStudentGroup(@PathVariable("studentGroupId") int studentGroupId,
                                      @ModelAttribute("studentGroupName") String studentGroupName, Model model) {
+        studentGroupService.updateStudentGroupName(studentGroupId, studentGroupName);
+        return "redirect:/getAllStudentGroups";
+    }
 
-
+    @GetMapping("/deleteStudentGroup/{studentGroupId}")
+    public String deleteFaculty(@PathVariable("studentGroupId") int studentGroupId, Model model) {
+        studentGroupService.deleteStudentGroup(studentGroupId);
         return "redirect:/getAllStudentGroups";
     }
 

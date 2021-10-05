@@ -36,6 +36,12 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Transactional
     @Override
     public void deleteStudentGroup(int id) {
+        studentGroupDao.deleteStudentGroup(id);
+    }
 
+    @Transactional
+    @Override
+    public void updateStudentGroupName(int studentGroupId, String studentGroupName) {
+        studentGroupDao.updateStudentGroupName(studentGroupId, studentGroupName);
     }
 }

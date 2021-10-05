@@ -12,4 +12,6 @@ public interface StudentGroupDao {
     public StudentGroup getStudentGroup(int id);
 
     public void deleteStudentGroup(int id);
+
+    public void updateStudentGroupName(int studentGroupId, String studentGroupName);
 }

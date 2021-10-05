@@ -13,14 +13,12 @@
     </tr>
     <tr th:each="faculty : ${allFaculties}">
         <td th:text="${faculty.name}"></td>
-        <td><a th:href="@{/editFaculty/{id}(id=${faculty.id})}">Edit</a></td>
+        <td><a th:href="@{/editFaculty/{id}(id=${faculty.id})}" target="_blank">Edit</a></td>
         <td><a th:href="@{/deleteFaculty/{id}(id=${faculty.id})}">Delete</a></td>
     </tr>
 </table>
-<br>
 <p><a href="addNewFaculty">Add a new Faculty</a></p>
-<br>
-<p><a href="getAllStudentGroups">Get all Student Groups</a></p>
+<p><a href="getAllStudentGroups" target="_blank">Get all Student Groups</a></p>
 
 </body>
 </html>
