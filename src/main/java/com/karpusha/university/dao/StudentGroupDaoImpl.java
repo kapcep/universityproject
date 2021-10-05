@@ -32,7 +32,9 @@ public class StudentGroupDaoImpl implements StudentGroupDao{
 
     @Override
     public StudentGroup getStudentGroup(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        StudentGroup studentGroup = session.get(StudentGroup.class,id);
+        return studentGroup;
     }
 
     @Override

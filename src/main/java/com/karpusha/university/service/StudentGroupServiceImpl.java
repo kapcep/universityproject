@@ -30,7 +30,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Transactional
     @Override
     public StudentGroup getStudentGroup(int id) {
-        return null;
+        return studentGroupDao.getStudentGroup(id);
     }
 
     @Transactional

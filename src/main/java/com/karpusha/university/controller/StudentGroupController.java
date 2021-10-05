@@ -7,10 +7,7 @@ import com.karpusha.university.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,7 @@ public class StudentGroupController {
     @Autowired
     FacultyService facultyService;
 
+    //get all student group
     @RequestMapping("/getAllStudentGroups")
     public String showAllStudentGroups(Model model) {
         List<StudentGroup> allStudentGroups = studentGroupService.getAllStudentGroups();
@@ -29,6 +27,7 @@ public class StudentGroupController {
         return "all-student-groups";
     }
 
+    //save student group
     @RequestMapping("/addNewStudentGroup/{id}")
     public String addNewStudetnGroup(@PathVariable("id")
                                              int facultyId, Model model) {
@@ -43,10 +42,28 @@ public class StudentGroupController {
     public String saveStudentGroup(@ModelAttribute("studentGroup") StudentGroup studentGroup,
                                    @PathVariable("facultyId")
                                            int facultyId, Model model) {
-        System.out.println("Faculty ID in saveFaculty method is: " + facultyId);
-        System.out.println("SG in saveFaculty method is: " + studentGroup);
         studentGroupService.saveStudentGroup(facultyId, studentGroup);
         return "redirect:/editFaculty/" + facultyId;
+    }
+
+    // edit student group
+    @GetMapping("/editStudentGroup/{studentGroupId}")
+    public String showStudentGroupUpdateForm(@PathVariable("studentGroupId")
+                                                     int studentGroupId, Model model) {
+        StudentGroup studentGroup = studentGroupService.getStudentGroup(studentGroupId);
+        String studentGroupName = studentGroup.getGroupName();
+        model.addAttribute("studentGroupId", studentGroupId);
+        model.addAttribute("studentGroupName", studentGroupName);
+
+        return "update-student-group";
+    }
+
+    @PostMapping("/updateStudentGroup/{studentGroupId}")
+    public String updateStudentGroup(@PathVariable("studentGroupId") int studentGroupId,
+                                     @ModelAttribute("studentGroupName") String studentGroupName, Model model) {
+
+
+        return "redirect:/getAllStudentGroups";
     }
 
 }

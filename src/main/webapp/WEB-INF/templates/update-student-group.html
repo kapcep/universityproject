@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Student Group</title>
+</head>
+<body align="center">
+<h2>Update student group</h2>
+<form action="#" th:action="@{/updateStudentGroup/{studentGroupId}(studentGroupId=${studentGroupId})}" method="post">
+    <p>Student Group Name: <input type="text" th:field="*{name}"/></p>
+    <input type="text" th:value="${studentGroupName}" name="studentGroupName"/>
+    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+</form>
+<br>
+<a th:href="@{/addNewStudent/{studentId}(studentId=${studentId})}">Add new Student</a>
+</body>
+</html>
