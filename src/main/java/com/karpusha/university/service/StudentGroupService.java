@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface StudentGroupService {
     public List<StudentGroup> getAllStudentGroups();
-    public void saveStudentGroup(Faculty faculty, StudentGroup studentGroup);
+
+    public void saveStudentGroup(int facultyId, StudentGroup studentGroup);
+
     public StudentGroup getStudentGroup(int id);
+
     public void deleteStudentGroup(int id);
 }

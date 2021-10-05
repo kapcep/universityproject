@@ -6,7 +6,8 @@
 </head>
 <body align="center">
 <h2>Student Group info</h2>
-<form action="#" th:action="@{/saveStudentGroup}" th:object="${studentGroup}" method="post">
+<form action="#" th:action="@{/saveStudentGroup/{facultyId}(facultyId=${faculty.id})}" th:object="${studentGroup}"
+      method="post">
     <p>Student Group Name: <input type="text" th:field="*{groupName}"/></p>
     <p><input type="submit" value="Add"/> <input type="reset" value="Reset"/></p>
 </form>

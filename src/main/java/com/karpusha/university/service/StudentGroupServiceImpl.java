@@ -23,9 +23,8 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Transactional
     @Override
-    public void saveStudentGroup(Faculty faculty, StudentGroup studentGroup) {
-//        studentGroup.setFaculty(faculty);
-        studentGroupDao.saveStudentGroup(studentGroup);
+    public void saveStudentGroup(int facultyId, StudentGroup studentGroup) {
+        studentGroupDao.saveStudentGroup(facultyId, studentGroup);
     }
 
     @Transactional

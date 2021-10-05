@@ -7,7 +7,7 @@ import java.util.List;
 public interface StudentGroupDao {
     public List<StudentGroup> getAllStudentGroups();
 
-    public void saveStudentGroup(StudentGroup studentGroup);
+    public void saveStudentGroup(int facultyId, StudentGroup studentGroup);
 
     public StudentGroup getStudentGroup(int id);
 

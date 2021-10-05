@@ -26,29 +26,27 @@ public class StudentGroupController {
     public String showAllStudentGroups(Model model) {
         List<StudentGroup> allStudentGroups = studentGroupService.getAllStudentGroups();
         model.addAttribute("allStudentGroups", allStudentGroups);
-
         return "all-student-groups";
     }
 
     @RequestMapping("/addNewStudentGroup/{id}")
     public String addNewStudetnGroup(@PathVariable("id")
-                                             int id, Model model) {
+                                             int facultyId, Model model) {
         StudentGroup studentGroup = new StudentGroup();
-        Faculty faculty = facultyService.getFaculty(id);
+        Faculty faculty = facultyService.getFaculty(facultyId);
         model.addAttribute("studentGroup", studentGroup);
         model.addAttribute("faculty", faculty);
-
         return "add-student-group";
     }
 
-    @RequestMapping("/saveStudentGroup")
+    @RequestMapping("/saveStudentGroup/{facultyId}")
     public String saveStudentGroup(@ModelAttribute("studentGroup") StudentGroup studentGroup,
-                                   @ModelAttribute("faculty") Faculty faculty) {
-        System.out.println("Faculty in saveFaculty method is: " + faculty);
+                                   @PathVariable("facultyId")
+                                           int facultyId, Model model) {
+        System.out.println("Faculty ID in saveFaculty method is: " + facultyId);
         System.out.println("SG in saveFaculty method is: " + studentGroup);
-        studentGroupService.saveStudentGroup(faculty, studentGroup);
-//        refactor: return to Faculty page not to list of Faculties
-        return "redirect:/";
+        studentGroupService.saveStudentGroup(facultyId, studentGroup);
+        return "redirect:/editFaculty/" + facultyId;
     }
 
 }
