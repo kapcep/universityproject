@@ -62,4 +62,12 @@ public class FacultyController {
         return "redirect:/";
     }
 
+    @GetMapping("/getStudentGroupsInFaculty/{id}")
+    public String getStudentGroupsInFaculty(@PathVariable("id") int id, Model model) {
+        Faculty faculty = facultyService.getFaculty(id);
+        System.out.println(faculty.getStudentGroups());
+
+        return "all-students";
+    }
+
 }

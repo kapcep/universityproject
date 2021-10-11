@@ -16,7 +16,7 @@ public class Faculty {
     @Column(name = "faculty_name")
     private String name;
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<StudentGroup> studentGroups;
 
     @OneToMany(mappedBy = "faculty")
