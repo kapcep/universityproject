@@ -10,7 +10,12 @@ public class HibernateTestMain {
 
 //        saveFaculty(getSessionFactory(),new Faculty("CTO"));
         //saveStudentGroup(getSessionFactory(), new StudentGroup("BD-2"));
+       // System.out.println(getFaculty(getSessionFactory(),1).getStudentGroups());
+        SessionFactory sessionFactory = getSessionFactory();
         System.out.println(getFaculty(getSessionFactory(),1).getStudentGroups());
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.close();
+        sessionFactory.close();
 //        saveStudent(getSessionFactory(),new Student("Iurii","Likov",28));
 //        saveDepartment(getSessionFactory(),new Department("Deep Dev"));
 //        saveTeacher(getSessionFactory(), new Teacher("Olena", "Linkerman", 35));
@@ -43,16 +48,16 @@ public class HibernateTestMain {
     private  static  Faculty getFaculty(SessionFactory factory, int id){
         Session session = null;
         Faculty faculty = null;
-        try {
+//        try {
             session = factory.getCurrentSession();
             session.beginTransaction();
             faculty = session.get(Faculty.class, id);
             faculty.getStudentGroups();
 
-        } finally {
-            session.close();
-            factory.close();
-        }
+//        } finally {
+//            session.close();
+//            factory.close();
+//        }
         return faculty;
     }
 

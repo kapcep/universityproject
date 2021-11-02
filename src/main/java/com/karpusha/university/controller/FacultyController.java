@@ -2,6 +2,7 @@ package com.karpusha.university.controller;
 
 import com.karpusha.university.dao.FacultyDao;
 import com.karpusha.university.entity.Faculty;
+import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,9 +66,10 @@ public class FacultyController {
     @GetMapping("/getStudentGroupsInFaculty/{id}")
     public String getStudentGroupsInFaculty(@PathVariable("id") int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
-        System.out.println(faculty.getStudentGroups());
+        List<StudentGroup> studentGroups = faculty.getStudentGroups();
+        model.addAttribute("allStudentGroups",studentGroups);
 
-        return "all-students";
+        return "all-student-groups";
     }
 
 }
