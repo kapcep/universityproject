@@ -54,7 +54,7 @@ public class FacultyController {
         faculty.setId(id);
         facultyService.saveFaculty(faculty);
         model.addAttribute("faculty", faculty);
-        return "redirect:/";
+        return "redirect:/editFaculty/" + id;
     }
 
     @GetMapping("/deleteFaculty/{id}")
@@ -67,7 +67,7 @@ public class FacultyController {
     public String getStudentGroupsInFaculty(@PathVariable("id") int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
         List<StudentGroup> studentGroups = faculty.getStudentGroups();
-        model.addAttribute("allStudentGroups",studentGroups);
+        model.addAttribute("allStudentGroups", studentGroups);
 
         return "all-student-groups";
     }
