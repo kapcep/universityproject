@@ -1,7 +1,6 @@
 package com.karpusha.university.controller;
 
 import com.karpusha.university.entity.Faculty;
-import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.FacultyService;
 import com.karpusha.university.service.StudentGroupService;

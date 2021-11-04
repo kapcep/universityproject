@@ -1,6 +1,5 @@
 package com.karpusha.university.service;
 
-import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
 
 import java.util.List;

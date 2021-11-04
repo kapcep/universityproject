@@ -1,7 +1,6 @@
 package com.karpusha.university.service;
 
 import com.karpusha.university.dao.StudentGroupDao;
-import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
