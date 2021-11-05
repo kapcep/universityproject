@@ -29,8 +29,8 @@ public class StudentGroupController {
 
     //save student group
     @RequestMapping("/addNewStudentGroup/{id}")
-    public String addNewStudetnGroup(@PathVariable("id")
-                                             int facultyId, Model model) {
+    public String addNewStudentsGroup(@PathVariable("id")
+                                              int facultyId, Model model) {
         StudentGroup studentGroup = new StudentGroup();
         Faculty faculty = facultyService.getFaculty(facultyId);
         model.addAttribute("studentGroup", studentGroup);

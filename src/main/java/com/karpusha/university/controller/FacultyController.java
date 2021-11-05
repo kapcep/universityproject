@@ -1,6 +1,7 @@
 package com.karpusha.university.controller;
 
 import com.karpusha.university.dao.FacultyDao;
+import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.FacultyService;
@@ -70,6 +71,15 @@ public class FacultyController {
         model.addAttribute("allStudentGroups", studentGroups);
 
         return "all-student-groups";
+    }
+
+    @GetMapping("/getDepartmentsInFaculty/{id}")
+    public String getDepartmentsInFaculty(@PathVariable("id") int id, Model model) {
+        Faculty faculty = facultyService.getFaculty(id);
+        List<Department> departments = faculty.getDepartments();
+        model.addAttribute("departments", departments);
+
+        return "all-departments";
     }
 
 }

@@ -40,7 +40,7 @@ public class DepartmentController {
                                  @PathVariable("facultyId")
                                          int facultyId, Model model) {
         departmentService.saveDepartment(facultyId, department);
-        return "redirect:/editDepartment/" + facultyId;
+        return "redirect:/editFaculty/" + facultyId;
     }
 
     @GetMapping("/editDepartment/{departmentId}")
