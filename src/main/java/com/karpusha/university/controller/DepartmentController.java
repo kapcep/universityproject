@@ -59,7 +59,7 @@ public class DepartmentController {
                                    @ModelAttribute("departmentName") String departmentName, Model model) {
         int facultyId = departmentService.getDepartment(departmentId).getFaculty().getId();
         departmentService.updateDepartmentName(departmentId, departmentName);
-        return "redirect:/getDepartmentInFaculty/" + facultyId;
+        return "redirect://getDepartmentsInFaculty/" + facultyId;
     }
 
     @GetMapping("/deleteDepartment/{departmentId}")

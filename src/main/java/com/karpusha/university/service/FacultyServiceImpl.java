@@ -32,6 +32,7 @@ public class FacultyServiceImpl implements FacultyService {
     public Faculty getFaculty(int id) {
         Faculty faculty = facultyDao.getFaculty(id);
         Hibernate.initialize(faculty.getStudentGroups());
+        Hibernate.initialize(faculty.getDepartments());
         return faculty;
     }
 

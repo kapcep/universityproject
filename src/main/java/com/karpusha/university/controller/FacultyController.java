@@ -77,7 +77,7 @@ public class FacultyController {
     public String getDepartmentsInFaculty(@PathVariable("id") int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
         List<Department> departments = faculty.getDepartments();
-        model.addAttribute("departments", departments);
+        model.addAttribute("allDepartments", departments);
 
         return "all-departments";
     }
