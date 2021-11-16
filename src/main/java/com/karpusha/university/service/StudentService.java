@@ -1,10 +1,10 @@
-package com.karpusha.university.dao;
+package com.karpusha.university.service;
 
 import com.karpusha.university.entity.Student;
 
 import java.util.List;
 
-public interface StudentDao {
+public interface StudentService {
     public List<Student> getAllStudents();
 
     public void saveStudent(Student student);
