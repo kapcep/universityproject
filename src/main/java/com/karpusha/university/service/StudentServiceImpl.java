@@ -3,10 +3,12 @@ package com.karpusha.university.service;
 import com.karpusha.university.dao.StudentDao;
 import com.karpusha.university.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
@@ -20,8 +22,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Transactional
     @Override
-    public void saveStudent(Student student) {
-        studentDao.saveStudent(student);
+    public void saveStudent(Student student, int studentGroupId) {
+        studentDao.saveStudent(student, studentGroupId);
     }
 
     @Transactional

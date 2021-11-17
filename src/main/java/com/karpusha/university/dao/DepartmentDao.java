@@ -1,7 +1,6 @@
 package com.karpusha.university.dao;
 
 import com.karpusha.university.entity.Department;
-import com.karpusha.university.entity.StudentGroup;
 
 import java.util.List;
 

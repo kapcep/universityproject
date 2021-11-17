@@ -14,9 +14,9 @@ import java.util.List;
 @Controller
 public class DepartmentController {
     @Autowired
-    DepartmentService departmentService;
+    private DepartmentService departmentService;
     @Autowired
-    FacultyService facultyService;
+    private FacultyService facultyService;
 
     @RequestMapping("/getAllDepartments")
     public String showAllDepartments(Model model) {

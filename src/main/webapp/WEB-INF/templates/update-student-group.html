@@ -7,10 +7,10 @@
 <body align="center">
 <h2>Update student group</h2>
 <form action="#" th:action="@{/updateStudentGroup/{studentGroupId}(studentGroupId=${studentGroupId})}" method="post">
-        <input type="text" th:value="${studentGroupName}" name="studentGroupName"/>
+    <input type="text" th:value="${studentGroupName}" name="studentGroupName"/>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
 </form>
 <br>
-<a th:href="@{/addNewStudent/{studentId}(studentId=${studentId})}">Add new Student</a>
+<a th:href="@{/addNewStudent/{studentGroupId}(studentGroupId=${studentGroupId})}">Add new Student</a>
 </body>
 </html>

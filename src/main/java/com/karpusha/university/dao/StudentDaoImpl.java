@@ -1,13 +1,16 @@
 package com.karpusha.university.dao;
 
 import com.karpusha.university.entity.Student;
+import com.karpusha.university.entity.StudentGroup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class StudentDaoImpl implements StudentDao {
 
     @Autowired
@@ -23,8 +26,10 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void saveStudent(Student student) {
+    public void saveStudent(Student student, int studentGroupId) {
         Session session = sessionFactory.getCurrentSession();
+        StudentGroup studentGroup = session.get(StudentGroup.class, studentGroupId);
+        student.setStudentGroup(studentGroup);
         session.saveOrUpdate(student);
     }
 
