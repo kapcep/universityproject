@@ -2,6 +2,7 @@ package com.karpusha.university.service;
 
 import com.karpusha.university.dao.StudentGroupDao;
 import com.karpusha.university.entity.StudentGroup;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,9 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Transactional
     @Override
     public StudentGroup getStudentGroup(int id) {
-        return studentGroupDao.getStudentGroup(id);
+        StudentGroup studentGroup = studentGroupDao.getStudentGroup(id);
+        Hibernate.initialize(studentGroup.getStudents());
+        return studentGroup;
     }
 
     @Transactional

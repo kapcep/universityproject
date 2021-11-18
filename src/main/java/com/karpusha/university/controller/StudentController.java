@@ -1,5 +1,6 @@
 package com.karpusha.university.controller;
 
+import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.StudentGroupService;
@@ -7,10 +8,7 @@ import com.karpusha.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -62,6 +60,16 @@ public class StudentController {
         model.addAttribute("studentSurName", studentSurName);
         model.addAttribute("studentAge", studentAge);
         return "update-student";
+    }
+
+    @PostMapping("/updateStudent/{studentId}")
+    public String updateStudent(@PathVariable("studentId") int studentId, @ModelAttribute("student") Student student, Model model) {
+
+        student.setId(studentId);
+
+
+        model.addAttribute("student", student);
+        return "redirect:/editStudent/" + studentId;
     }
 
 }

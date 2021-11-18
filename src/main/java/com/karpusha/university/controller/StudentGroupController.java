@@ -1,6 +1,7 @@
 package com.karpusha.university.controller;
 
 import com.karpusha.university.entity.Faculty;
+import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.FacultyService;
 import com.karpusha.university.service.StudentGroupService;
@@ -71,6 +72,18 @@ public class StudentGroupController {
         int facultyId = studentGroupService.getStudentGroup(studentGroupId).getFaculty().getId();
         studentGroupService.deleteStudentGroup(studentGroupId);
         return "redirect:/getStudentGroupsInFaculty/" + facultyId;
+    }
+
+    @GetMapping("/getStudentsInStudentGroup/{studentGroupId}")
+    public String getStudentsInStudentGroup(@PathVariable("studentGroupId") int studentGroupId, Model model) {
+        StudentGroup studentGroup = studentGroupService.getStudentGroup(studentGroupId);
+        List<Student> allStudents = studentGroup.getStudents();
+
+//        System.out.println("!!!!!!!!!!!!!!!!" + allStudents);
+
+        model.addAttribute("allStudents", allStudents);
+
+        return "all-students";
     }
 
 }
