@@ -1,6 +1,5 @@
 package com.karpusha.university.controller;
 
-import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.StudentGroupService;
@@ -51,23 +50,19 @@ public class StudentController {
     public String showStudentUpdateForm(@PathVariable("studentId")
                                                 int studentId, Model model) {
         Student student = studentService.getStudent(studentId);
-        String studentStudentName = student.getStudentName();
-        String studentSurName = student.getStudentSurName();
-        int studentAge = student.getAge();
+        int studentGroupId = student.getStudentGroup().getId();
+        model.addAttribute("student", student);
+        model.addAttribute("studentGroupId", studentGroupId);
 
-        model.addAttribute("studentId", studentId);
-        model.addAttribute("studentStudentName", studentStudentName);
-        model.addAttribute("studentSurName", studentSurName);
-        model.addAttribute("studentAge", studentAge);
         return "update-student";
     }
 
-    @PostMapping("/updateStudent/{studentId}")
-    public String updateStudent(@PathVariable("studentId") int studentId, @ModelAttribute("student") Student student, Model model) {
-
+    @PostMapping("/updateStudent/{studentGroupId}/{studentId}")
+    public String updateStudent(@PathVariable("studentGroupId") int studentGroupId,
+                                @PathVariable("studentId") int studentId,
+                                @ModelAttribute("student") Student student, Model model) {
         student.setId(studentId);
-
-
+        studentService.saveStudent(student, studentGroupId);
         model.addAttribute("student", student);
         return "redirect:/editStudent/" + studentId;
     }

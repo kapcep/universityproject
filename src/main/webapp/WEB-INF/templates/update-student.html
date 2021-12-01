@@ -6,10 +6,13 @@
 </head>
 <body align="center">
 <h2>Update Student</h2>
-<form action="#" th:action="@{/updateStudent/{studentId}(studentId=${studentId})}" method="post">
-    <p><input type="text" th:value="${studentStudentName}" name="studentStudentName"/></p>
-    <p><input type="text" th:value="${studentSurName}" name="studentStudentName"/></p>
-    <p><input type="number" th:value="${studentAge}" name="studentStudentName"/></p>
+<form action="#"
+      th:action="@{/updateStudent/{studentGroupId}/{studentId}(studentId=${studentId},studentGroupId=${studentGroupId})}"
+      th:object="${student}"
+      method="post">
+    <p><input type="text" th:field="*{studentName}"/></p>
+    <p><input type="text" th:field="*{studentSurName}"/></p>
+    <p><input type="number" th:field="*{age}"/></p>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
 </form>
 <br>

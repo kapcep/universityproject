@@ -78,9 +78,6 @@ public class StudentGroupController {
     public String getStudentsInStudentGroup(@PathVariable("studentGroupId") int studentGroupId, Model model) {
         StudentGroup studentGroup = studentGroupService.getStudentGroup(studentGroupId);
         List<Student> allStudents = studentGroup.getStudents();
-
-//        System.out.println("!!!!!!!!!!!!!!!!" + allStudents);
-
         model.addAttribute("allStudents", allStudents);
 
         return "all-students";
