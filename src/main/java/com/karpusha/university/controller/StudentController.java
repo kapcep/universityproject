@@ -67,4 +67,11 @@ public class StudentController {
         return "redirect:/editStudent/" + studentId;
     }
 
+    @GetMapping("/deleteStudent/{studentId}")
+    public String deleteStudent(@PathVariable("studentId") int studentId, Model model) {
+        int studentGroupId = studentService.getStudent(studentId).getStudentGroup().getId();
+        studentService.deleteStudent(studentId);
+        return "redirect:/getStudentsInStudentGroup/" + studentGroupId;
+    }
+
 }
