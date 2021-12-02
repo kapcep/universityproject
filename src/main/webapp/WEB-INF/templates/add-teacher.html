@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher</title>
+</head>
+<body align="center">
+<h2>Teacher Info</h2>
+<form action="#" th:action="@{/saveTeacher/{departmentId}(departmentId=${department.id})}" th:object="${teacher}"
+      method="post">
+    <p>Teacher Name: <input type="text" th:field="*{teacherName}"/></p>
+    <p>Teacher SurName: <input type="text" th:field="*{teacherSurName}"/></p>
+    <p>Age: <input type="number" th:field="*{age}"/></p>
+    <p><input type="submit" value="Add"/> <input type="reset" value="Reset"/></p>
+</form>
+</body>
+</html>

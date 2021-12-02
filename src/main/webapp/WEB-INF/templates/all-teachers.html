@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>All teachers</title>
+</head>
+<body align="center">
+<h2>All Teachers</h2>
+<br>
+<table align="center">
+    <tr>
+        <th>|Name|</th>
+        <th>|SurName|</th>
+        <th>|Age|</th>
+        <th>|Department|</th>
+        <th>|Edit|</th>
+        <th>|Delete|</th>
+    </tr>
+    <tr th:each="teacher : ${allTeachers}">
+        <td th:text="${teacher.teacherName}"></td>
+        <td th:text="${teacher.teacherSurName}"></td>
+        <td th:text="${teacher.age}"></td>
+        <td th:text="${teacher.department.name}"></td>
+        <td><a th:href="@{/editTeacher/{teacherId}(teacherId=${teacher.id})}" target="_blank">Edit</a></td>
+        <td><a th:href="@{/deleteTeacher/{teacherId}(teacherId=${teacher.id})}">Delete</a></td>
+    </tr>
+</table>
+<br>
+</body>
+</html>
