@@ -2,6 +2,7 @@ package com.karpusha.university.controller;
 
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
+import com.karpusha.university.entity.Teacher;
 import com.karpusha.university.service.DepartmentService;
 import com.karpusha.university.service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class DepartmentController {
                                    @ModelAttribute("departmentName") String departmentName, Model model) {
         int facultyId = departmentService.getDepartment(departmentId).getFaculty().getId();
         departmentService.updateDepartmentName(departmentId, departmentName);
-        return "redirect://getDepartmentsInFaculty/" + facultyId;
+        return "redirect:/getDepartmentsInFaculty/" + facultyId;
     }
 
     @GetMapping("/deleteDepartment/{departmentId}")
@@ -69,4 +70,11 @@ public class DepartmentController {
         return "redirect:/getDepartmentsInFaculty/" + facultyId;
     }
 
+    @GetMapping("/getTeachersInDepartment/{departmentId}")
+    public String getTeachersInDepartment(@PathVariable("departmentId") int departmentId, Model model) {
+        Department department = departmentService.getDepartment(departmentId);
+        List<Teacher> allTeachers = department.getTeachers();
+        model.addAttribute("allTeachers", allTeachers);
+        return "all-teachers";
+    }
 }

@@ -2,6 +2,7 @@ package com.karpusha.university.service;
 
 import com.karpusha.university.dao.DepartmentDao;
 import com.karpusha.university.entity.Department;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional
     @Override
     public Department getDepartment(int departmentId) {
-        return departmentDao.getDepartment(departmentId);
+        Department department = departmentDao.getDepartment(departmentId);
+        Hibernate.initialize(department.getTeachers());
+        return department;
     }
 
     @Transactional
