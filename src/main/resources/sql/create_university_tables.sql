@@ -63,6 +63,6 @@ ALTER TABLE "schedule_items" ADD FOREIGN KEY ("schedule_time_id") REFERENCES "sc
 
 ALTER TABLE "schedule_items" ADD FOREIGN KEY ("classroom_id") REFERENCES "classroom" ("id");
 
-ALTER TABLE "schedule_items" ADD FOREIGN KEY ("student_group_id") REFERENCES "student_groups" ("id");
-
 ALTER TABLE "schedule_items" ADD FOREIGN KEY ("teacher_id") REFERENCES "teachers" ("id");
+
+ALTER TABLE "schedule_items" ADD FOREIGN KEY ("student_group_id") REFERENCES "student_groups" ("id"); 

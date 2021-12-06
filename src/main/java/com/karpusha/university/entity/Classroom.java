@@ -15,4 +15,43 @@ public class Classroom {
     @Column(name = "classroom_number")
     private int classroomNumber;
 
+    public Classroom() {
+    }
+
+    public Classroom(String classroomName, int classroomNumber) {
+        this.classroomName = classroomName;
+        this.classroomNumber = classroomNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getClassroomName() {
+        return classroomName;
+    }
+
+    public void setClassroomName(String classroomName) {
+        this.classroomName = classroomName;
+    }
+
+    public int getClassroomNumber() {
+        return classroomNumber;
+    }
+
+    public void setClassroomNumber(int classroomNumber) {
+        this.classroomNumber = classroomNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Classroom{" +
+                "classroomName='" + classroomName + '\'' +
+                ", classroomNumber=" + classroomNumber +
+                '}';
+    }
 }
