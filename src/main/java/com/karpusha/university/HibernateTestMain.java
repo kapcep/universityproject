@@ -10,22 +10,13 @@ import java.util.Date;
 public class HibernateTestMain {
     public static void main(String[] args) {
 
-//        saveFaculty(getSessionFactory(),new Faculty("CTO"));
-        //saveStudentGroup(getSessionFactory(), new StudentGroup("BD-2"));
-        // System.out.println(getFaculty(getSessionFactory(),1).getStudentGroups());
+//
 //        SessionFactory sessionFactory = getSessionFactory();
 //        System.out.println(getFaculty(getSessionFactory(),1).getStudentGroups());
 //        Session currentSession = sessionFactory.getCurrentSession();
 //        currentSession.close();
 //        sessionFactory.close();
-
-//        saveClassroom(getSessionFactory(), new Classroom("Botanic", 12));
-
-        saveScheduleTime(getSessionFactory(), new ScheduleTime(new Date(), new Date()));
-
-//        saveStudent(getSessionFactory(),new Student("Iurii","Likov",28));
-//        saveDepartment(getSessionFactory(),new Department("Deep Dev"));
-//        saveTeacher(getSessionFactory(), new Teacher("Olena", "Linkerman", 35));
+        saveScheduleItem(getSessionFactory());
 
     }
 
@@ -38,9 +29,23 @@ public class HibernateTestMain {
                 .addAnnotatedClass(Teacher.class)
                 .addAnnotatedClass(Classroom.class)
                 .addAnnotatedClass(ScheduleTime.class)
+                .addAnnotatedClass(ScheduleItem.class)
                 .buildSessionFactory();
     }
 
+    private static void saveScheduleItem(SessionFactory factory) {
+        Session session = null;
+        try {
+            session = factory.getCurrentSession();
+            session.beginTransaction();
+            session.save(new Classroom("Histrorical", 22));
+            session.save(new ScheduleTime(new Date(), new Date()));
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+            factory.close();
+        }
+    }
 
     private static void saveScheduleTime(SessionFactory factory, ScheduleTime scheduleTime) {
         Session session = null;

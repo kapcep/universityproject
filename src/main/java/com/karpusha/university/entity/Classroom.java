@@ -10,8 +10,10 @@ public class Classroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "classroom_name")
     private String classroomName;
+
     @Column(name = "classroom_number")
     private int classroomNumber;
 
