@@ -1,6 +1,7 @@
 package com.karpusha.university.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "schedule_items")
@@ -11,9 +12,13 @@ public class ScheduleItem {
     @Column(name = "id")
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "schedule_time_id")
-    private ScheduleTime scheduleTime;
+    @Column(name = "begin_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date beginTime;
+
+    @Column(name = "end_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endTime;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "classroom_id")
@@ -30,14 +35,6 @@ public class ScheduleItem {
     public ScheduleItem() {
     }
 
-    public ScheduleItem(ScheduleTime scheduleTime, Classroom classroom,
-                        StudentGroup studentGroup, Teacher teacher) {
-        this.scheduleTime = scheduleTime;
-        this.classroom = classroom;
-        this.studentGroup = studentGroup;
-        this.teacher = teacher;
-    }
-
     public int getId() {
         return id;
     }
@@ -46,12 +43,20 @@ public class ScheduleItem {
         this.id = id;
     }
 
-    public ScheduleTime getScheduleTime() {
-        return scheduleTime;
+    public Date getBeginTime() {
+        return beginTime;
     }
 
-    public void setScheduleTime(ScheduleTime scheduleTime) {
-        this.scheduleTime = scheduleTime;
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Classroom getClassroom() {
@@ -76,5 +81,13 @@ public class ScheduleItem {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    @Override
+    public String toString() {
+        return "ScheduleItem{" +
+                "beginTime=" + beginTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

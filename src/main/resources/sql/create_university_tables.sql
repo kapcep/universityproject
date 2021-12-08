@@ -31,21 +31,17 @@ CREATE TABLE "teachers" (
                             "department_id" int
 );
 
-CREATE TABLE "schedule_time" (
-                                 "id" SERIAL PRIMARY KEY,
-                                 "begin_time" timestamp,
-                                 "end_time" timestamp
-);
-
 CREATE TABLE "classroom" (
                              "id" SERIAL PRIMARY KEY,
                              "classroom_name" varchar,
-                             "classroom_number" int
+                             "classroom_number" int,
+                             "department_id" int
 );
 
 CREATE TABLE "schedule_items" (
                                   "id" SERIAL PRIMARY KEY,
-                                  "schedule_time_id" int,
+                                  "begin_time" timestamp,
+                                  "end_time" timestamp,
                                   "classroom_id" int,
                                   "student_group_id" int,
                                   "teacher_id" int
@@ -59,10 +55,10 @@ ALTER TABLE "students" ADD FOREIGN KEY ("student_group_id") REFERENCES "student_
 
 ALTER TABLE "teachers" ADD FOREIGN KEY ("department_id") REFERENCES "departments" ("id");
 
-ALTER TABLE "schedule_items" ADD FOREIGN KEY ("schedule_time_id") REFERENCES "schedule_time" ("id");
-
 ALTER TABLE "schedule_items" ADD FOREIGN KEY ("classroom_id") REFERENCES "classroom" ("id");
 
 ALTER TABLE "schedule_items" ADD FOREIGN KEY ("teacher_id") REFERENCES "teachers" ("id");
 
-ALTER TABLE "schedule_items" ADD FOREIGN KEY ("student_group_id") REFERENCES "student_groups" ("id"); 
+ALTER TABLE "schedule_items" ADD FOREIGN KEY ("student_group_id") REFERENCES "student_groups" ("id");
+
+ALTER TABLE "classroom" ADD FOREIGN KEY ("department_id") REFERENCES "departments" ("id");

@@ -28,7 +28,6 @@ public class HibernateTestMain {
                 .addAnnotatedClass(Department.class)
                 .addAnnotatedClass(Teacher.class)
                 .addAnnotatedClass(Classroom.class)
-                .addAnnotatedClass(ScheduleTime.class)
                 .addAnnotatedClass(ScheduleItem.class)
                 .buildSessionFactory();
     }
@@ -39,7 +38,6 @@ public class HibernateTestMain {
             session = factory.getCurrentSession();
             session.beginTransaction();
             session.save(new Classroom("Histrorical", 22));
-            session.save(new ScheduleTime(new Date(), new Date()));
             session.getTransaction().commit();
         } finally {
             session.close();
@@ -47,18 +45,6 @@ public class HibernateTestMain {
         }
     }
 
-    private static void saveScheduleTime(SessionFactory factory, ScheduleTime scheduleTime) {
-        Session session = null;
-        try {
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            session.save(scheduleTime);
-            session.getTransaction().commit();
-        } finally {
-            session.close();
-            factory.close();
-        }
-    }
 
     private static void saveClassroom(SessionFactory factory, Classroom classroom) {
         Session session = null;
