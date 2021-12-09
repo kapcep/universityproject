@@ -42,6 +42,7 @@ CREATE TABLE "schedule_items" (
                                   "id" SERIAL PRIMARY KEY,
                                   "begin_time" timestamp,
                                   "end_time" timestamp,
+                                  "lesson_name" varchar,
                                   "classroom_id" int,
                                   "student_group_id" int,
                                   "teacher_id" int

@@ -151,18 +151,18 @@ insert into classroom (classroom_name, classroom_number, department_id)  values 
 insert into classroom (classroom_name, classroom_number, department_id)  values ('SC-6',36,6);
 
 insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-1',37,7);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-1',38,7);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-1',39,7);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-1',40,7);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-1',41,7);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-1',42,7);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-2',38,7);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-3',39,7);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-4',40,7);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-5',41,7);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('MT-6',42,7);
 
 insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-1',43,8);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-1',44,8);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-1',45,8);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-1',46,8);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-1',47,8);
-insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-1',48,8);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-2',44,8);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-3',45,8);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-4',46,8);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-5',47,8);
+insert into classroom (classroom_name, classroom_number, department_id)  values ('AT-6',48,8);
 
 insert into classroom (classroom_name, classroom_number, department_id)  values ('AI-1',49,8);
 insert into classroom (classroom_name, classroom_number, department_id)  values ('AI-2',50,8);
