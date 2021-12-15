@@ -4,6 +4,7 @@ import com.karpusha.university.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.omg.CORBA.UserException;
 
 import java.util.Date;
 
@@ -37,8 +38,14 @@ public class HibernateTestMain {
         try {
             session = factory.getCurrentSession();
             session.beginTransaction();
-            session.save(new Classroom("Histrorical", 22));
-            session.getTransaction().commit();
+            Classroom classroom = session.get(Classroom.class, 1);
+            Teacher teacher = session.get(Teacher.class, 1);
+            StudentGroup studentGroup = session.get(StudentGroup.class,1);
+//            System.out.println(classroom);
+//            System.out.println(teacher);
+
+            session.save(new ScheduleItem(new Date(),new Date(),"Philosophy Java",classroom,studentGroup,teacher));
+            //session.getTransaction().commit();
         } finally {
             session.close();
             factory.close();

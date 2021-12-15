@@ -20,6 +20,9 @@ public class ScheduleItem {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
+    @Column(name = "lesson_name")
+    private String lessonName;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
@@ -33,6 +36,15 @@ public class ScheduleItem {
     private Teacher teacher;
 
     public ScheduleItem() {
+    }
+
+    public ScheduleItem(Date beginTime, Date endTime, String lessonName, Classroom classroom, StudentGroup studentGroup, Teacher teacher) {
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.lessonName = lessonName;
+        this.classroom = classroom;
+        this.studentGroup = studentGroup;
+        this.teacher = teacher;
     }
 
     public int getId() {
@@ -59,6 +71,14 @@ public class ScheduleItem {
         this.endTime = endTime;
     }
 
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
     public Classroom getClassroom() {
         return classroom;
     }
@@ -81,13 +101,5 @@ public class ScheduleItem {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
-    }
-
-    @Override
-    public String toString() {
-        return "ScheduleItem{" +
-                "beginTime=" + beginTime +
-                ", endTime=" + endTime +
-                '}';
     }
 }
