@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>All Schedule Items</title>
+</head>
+<body align="center">
+<h2>All Schedule Items</h2>
+<br>
+<table align="center">
+
+    <tr th:each="studentGroup : ${studentGroups}">
+        <td th:text="${studentGroup.groupName}"></td>
+        <td th:text="${studentGroup.faculty.name}"></td>
+        <td><a th:href="@{/editStudentGroup/{id}(id=${studentGroup.id})}">Edit</a></td>
+        <td><a th:href="@{/deleteStudentGroup/{id}(id=${studentGroup.id})}">Delete</a></td>
+    </tr>
+</table>
+
+<div class="form-group blu-margin">
+    <select class="form-control" th:field="${studentGroup.id}" id="dropOperator">
+        <option value="0">select operator</option>
+        <option th:each="studentGroup : ${studentGroups}" th:value="${studentGroup.id}"
+                th:text="${studentGroup.groupName}"></option>
+    </select>
+</div>
+<br>
+</body>
+</html>
