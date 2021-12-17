@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Test Schedule</title>
+</head>
+<body align="center">
+<h2>Test Schedule</h2>
+<br>
+<table align="center">
+
+    <tr th:each="studentGroup : ${studentGroups}">
+        <td th:text="${studentGroup.groupName}"></td>
+        <td th:text="${studentGroup.faculty.name}"></td>
+        <td><a th:href="@{/editStudentGroup/{id}(id=${studentGroup.id})}">Edit</a></td>
+        <td><a th:href="@{/deleteStudentGroup/{id}(id=${studentGroup.id})}">Delete</a></td>
+    </tr>
+</table>
+<select>
+    <option th:each="studentGroup: ${studentGroups}"
+            th:text="${studentGroup.groupName}"
+            th:value="${studentGroup.id}">
+    </option>
+</select>
+
+<br>
+</body>
+</html>

@@ -18,12 +18,19 @@ public class ScheduleItemController {
 
     @RequestMapping("/getAllScheduleItems")
     public String showAllScheduleItems(Model model) {
+
+        return "all-schedule-items";
+    }
+
+    @RequestMapping("/testSchedulePage")
+    public String showTest(Model model) {
         List<StudentGroup> studentGroups = new ArrayList<>();
         studentGroups.add(studentGroupService.getStudentGroup(1));
         studentGroups.add(studentGroupService.getStudentGroup(2));
         studentGroups.add(studentGroupService.getStudentGroup(3));
+
         model.addAttribute("studentGroups", studentGroups);
-        return "all-schedule-items";
+        return "test-schedule-page";
     }
 
 }
