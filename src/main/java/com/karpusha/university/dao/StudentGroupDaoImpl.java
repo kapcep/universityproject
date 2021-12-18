@@ -41,7 +41,7 @@ public class StudentGroupDaoImpl implements StudentGroupDao {
     @Override
     public void deleteStudentGroup(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Faculty> query = session.createQuery("delete from  StudentGroup where id =:studentGroupId");
+        Query<StudentGroup> query = session.createQuery("delete from  StudentGroup where id =:studentGroupId");
         query.setParameter("studentGroupId", id);
         query.executeUpdate();
     }

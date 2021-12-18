@@ -42,7 +42,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public void deleteDepartment(int departmentId) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Faculty> query = session.createQuery("delete from  Department where id =:departmentId");
+        Query<Department> query = session.createQuery("delete from  Department where id =:departmentId");
         query.setParameter("departmentId", departmentId);
         query.executeUpdate();
     }

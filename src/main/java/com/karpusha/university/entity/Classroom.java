@@ -17,12 +17,17 @@ public class Classroom {
     @Column(name = "classroom_number")
     private int classroomNumber;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     public Classroom() {
     }
 
-    public Classroom(String classroomName, int classroomNumber) {
+    public Classroom(String classroomName, int classroomNumber, Department department) {
         this.classroomName = classroomName;
         this.classroomNumber = classroomNumber;
+        this.department = department;
     }
 
     public int getId() {
@@ -47,6 +52,14 @@ public class Classroom {
 
     public void setClassroomNumber(int classroomNumber) {
         this.classroomNumber = classroomNumber;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override
