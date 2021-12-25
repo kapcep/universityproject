@@ -7,6 +7,10 @@ import javax.persistence.*;
 @Table(name = "students")
 public class Student {
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "student_group_id")
+    StudentGroup studentGroup;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,10 +24,6 @@ public class Student {
 
     @Column(name = "age")
     private int age;
-
-    @ManyToOne
-    @JoinColumn(name = "student_group_id")
-    StudentGroup studentGroup;
 
     public Student() {
     }

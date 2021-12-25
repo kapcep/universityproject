@@ -20,7 +20,7 @@ public class Teacher {
     @Column(name = "age")
     private int age;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id")
     private Department department;
 

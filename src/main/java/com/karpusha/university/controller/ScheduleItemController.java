@@ -5,16 +5,19 @@ import com.karpusha.university.entity.Classroom;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.entity.Teacher;
 import com.karpusha.university.service.ClassroomService;
+import com.karpusha.university.service.ScheduleItemService;
 import com.karpusha.university.service.StudentGroupService;
 import com.karpusha.university.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -28,6 +31,9 @@ public class ScheduleItemController {
 
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    ScheduleItemService scheduleItemService;
 
     @RequestMapping("/getAllScheduleItems")
     public String showAllScheduleItems(Model model) {
@@ -50,14 +56,13 @@ public class ScheduleItemController {
     }
 
     @PostMapping("/addScheduleItem")
-    public String addScheduleItem(@ModelAttribute ScheduleItemDto scheduleItemDto, Model model) {
-        System.out.println("--------------------------------------");
-        System.out.println(classroomService.getClassroom(scheduleItemDto.getClassroomId()));
-        System.out.println(studentGroupService.getStudentGroup(scheduleItemDto.getStudentGroupId()));
-        System.out.println(teacherService.getTeacher(scheduleItemDto.getTeacherId()));
-        System.out.println(scheduleItemDto.getBeginDate());
-        System.out.println(scheduleItemDto.getEndDate());
-        System.out.println(scheduleItemDto.getLessonName());
+    public String addScheduleItem(@ModelAttribute ScheduleItemDto scheduleItemDto, Model model) throws ParseException {
+
+        Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
+        scheduleItemService.saveScheduleItem(beginDate, endDate, scheduleItemDto.getLessonName(),
+                scheduleItemDto.getClassroomId(), scheduleItemDto.getStudentGroupId(), scheduleItemDto.getTeacherId());
+
         return "all-schedule-items";
     }
 

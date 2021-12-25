@@ -15,11 +15,11 @@ public class StudentGroup {
     @Column(name = "group_name")
     private String groupName;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "studentGroup")
+    @OneToMany(mappedBy = "studentGroup", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Student> students;
 
     public StudentGroup() {

@@ -15,12 +15,19 @@ public class Department {
     @Column(name = "department_name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Teacher> teachers;
+
+    public Department() {
+    }
+
+    public Department(String name) {
+        this.name = name;
+    }
 
     public void addTeacherToDepartment(Teacher teacher) {
         if (teachers == null) {
@@ -28,13 +35,6 @@ public class Department {
         }
         teachers.add(teacher);
         teacher.setDepartment(this);
-    }
-
-    public Department() {
-    }
-
-    public Department(String name) {
-        this.name = name;
     }
 
     public int getId() {

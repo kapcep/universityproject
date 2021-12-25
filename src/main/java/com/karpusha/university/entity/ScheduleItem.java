@@ -23,7 +23,7 @@ public class ScheduleItem {
     @Column(name = "lesson_name")
     private String lessonName;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
