@@ -1,6 +1,9 @@
 package com.karpusha.university.dao;
 
-import com.karpusha.university.entity.*;
+import com.karpusha.university.entity.Classroom;
+import com.karpusha.university.entity.ScheduleItem;
+import com.karpusha.university.entity.StudentGroup;
+import com.karpusha.university.entity.Teacher;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -45,5 +48,22 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
         Query<ScheduleItem> query = session.createQuery("delete from  ScheduleItem where id =:scheduleItemId");
         query.setParameter("scheduleItemId", scheduleItemId);
         query.executeUpdate();
+    }
+
+    @Override
+    public void updateScheduleItem(int scheduleItemId, Date beginDate, Date endDate, String lessonName,
+                                   int classroomId, int studentGroupId, int teacherId) {
+        Session session = sessionFactory.getCurrentSession();
+        ScheduleItem scheduleItem = session.get(ScheduleItem.class, scheduleItemId);
+        Classroom classroom = session.get(Classroom.class, classroomId);
+        StudentGroup studentGroup = session.get(StudentGroup.class, studentGroupId);
+        Teacher teacher = session.get(Teacher.class,teacherId);
+        scheduleItem.setBeginTime(beginDate);
+        scheduleItem.setEndTime(endDate);
+        scheduleItem.setLessonName(lessonName);
+        scheduleItem.setClassroom(classroom);
+        scheduleItem.setStudentGroup(studentGroup);
+        scheduleItem.setTeacher(teacher);
+
     }
 }

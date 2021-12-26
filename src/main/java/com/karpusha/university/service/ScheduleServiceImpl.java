@@ -38,4 +38,12 @@ public class ScheduleServiceImpl implements ScheduleItemService {
     public void deleteScheduleItem(int scheduleItemId) {
         scheduleItemDao.deleteScheduleItem(scheduleItemId);
     }
+
+    @Transactional
+    @Override
+    public void updateScheduleItem(int scheduleItemId, Date beginDate, Date endDate, String lessonName,
+                                   int classroomId, int studentGroupId, int teacherId) {
+        scheduleItemDao.updateScheduleItem(scheduleItemId, beginDate, endDate, lessonName,
+                classroomId, studentGroupId, teacherId);
+    }
 }

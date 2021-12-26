@@ -37,7 +37,7 @@ public class ScheduleItemController {
     @RequestMapping("/getAllScheduleItems")
     public String showAllScheduleItems(Model model) {
         List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
-        model.addAttribute("scheduleItems",scheduleItems);
+        model.addAttribute("scheduleItems", scheduleItems);
         return "all-schedule-items";
     }
 
@@ -69,6 +69,33 @@ public class ScheduleItemController {
     @GetMapping("/deleteScheduleItem/{scheduleItemId}")
     public String deleteFaculty(@PathVariable("scheduleItemId") int scheduleItemId, Model model) {
         scheduleItemService.deleteScheduleItem(scheduleItemId);
+        return "redirect:/getAllScheduleItems";
+    }
+
+    @GetMapping("/editScheduleItem/{scheduleItemId}")
+    public String showScheduleItemUpdateForm(@PathVariable("scheduleItemId")
+                                                     int scheduleItemId, Model model) {
+        ScheduleItem scheduleItem = scheduleItemService.getScheduleItem(scheduleItemId);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+        ScheduleItemDto scheduleItemDto = new ScheduleItemDto(dateFormat.format(scheduleItem.getBeginTime()),
+                dateFormat.format(scheduleItem.getEndTime()), scheduleItem.getLessonName(),
+                scheduleItem.getClassroom().getId(), scheduleItem.getStudentGroup().getId(),
+                scheduleItem.getTeacher().getId());
+        model.addAttribute("scheduleItemId", scheduleItemId);
+        model.addAttribute("scheduleItemDto",scheduleItemDto);
+
+
+        return "update-schedule-item";
+    }
+
+    @PostMapping("/updateScheduleItem/{scheduleItemId}")
+    public String updateScheduleItem(@PathVariable("scheduleItemId") int scheduleItemId,
+                                     @ModelAttribute ScheduleItemDto scheduleItemDto, Model model) throws ParseException {
+        Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
+        scheduleItemService.updateScheduleItem(scheduleItemId, beginDate, endDate, scheduleItemDto.getLessonName(),
+                scheduleItemDto.getClassroomId(), scheduleItemDto.getStudentGroupId(), scheduleItemDto.getTeacherId());
+
         return "redirect:/getAllScheduleItems";
     }
 }

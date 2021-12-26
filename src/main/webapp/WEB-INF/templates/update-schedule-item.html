@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Schedule Item</title>
+</head>
+<body align="center">
+<h2>Update Schedule Item</h2>
+<form action="#" th:action="@{/updateScheduleItem/{scheduleItemId}(scheduleItemId=${scheduleItemId})}" method="post" >
+    <input type="text" th:value="${scheduleItemDto}" name="scheduleItemDto"/>
+    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+</form>
+<br>
+
+</body>
+</html>

@@ -13,4 +13,7 @@ public interface ScheduleItemService {
     public ScheduleItem getScheduleItem(int scheduleItemId);
 
     public void deleteScheduleItem(int scheduleItemId);
+
+    public void updateScheduleItem(int scheduleItemId, Date beginDate, Date endDate, String lessonName,
+                                   int classroomId, int studentGroupId, int teacherId);
 }
