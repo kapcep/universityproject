@@ -5,18 +5,18 @@
 <body align="center">
 <h2>All Students</h2>
 <br>
-<table align="center">
+<table align="center" border="1">
     <tr>
-        <th>|Name|</th>
-        <th>|SurName|</th>
-        <th>|Age|</th>
-        <th>|Student Group|</th>
-        <th>|Edit|</th>
-        <th>|Delete|</th>
+        <th>SurName</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Student Group</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     <tr th:each="student : ${allStudents}">
-        <td th:text="${student.studentName}"></td>
         <td th:text="${student.studentSurName}"></td>
+        <td th:text="${student.studentName}"></td>
         <td th:text="${student.age}"></td>
         <td th:text="${student.studentGroup.groupName}"></td>
         <td><a th:href="@{/editStudent/{studentId}(studentId=${student.id})}" target="_blank">Edit</a></td>

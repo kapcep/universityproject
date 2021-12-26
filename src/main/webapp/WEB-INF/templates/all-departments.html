@@ -5,12 +5,12 @@
 <body  align="center">
 <h2>All Departments</h2>
 <br>
-<table  align="center">
+<table  align="center" border="1">
     <tr>
-        <th>|Department Name|</th>
-        <th>|Faculty Name|</th>
-        <th>|Edit|</th>
-        <th>|Delete|</th>
+        <th>Department Name</th>
+        <th>Faculty Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     <tr th:each="department : ${allDepartments}">
         <td th:text="${department.name}"></td>

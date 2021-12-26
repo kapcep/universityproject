@@ -2,6 +2,7 @@ package com.karpusha.university.controller;
 
 import com.karpusha.university.dto.ScheduleItemDto;
 import com.karpusha.university.entity.Classroom;
+import com.karpusha.university.entity.ScheduleItem;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.entity.Teacher;
 import com.karpusha.university.service.ClassroomService;
@@ -11,9 +12,7 @@ import com.karpusha.university.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,12 +36,13 @@ public class ScheduleItemController {
 
     @RequestMapping("/getAllScheduleItems")
     public String showAllScheduleItems(Model model) {
-
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        model.addAttribute("scheduleItems",scheduleItems);
         return "all-schedule-items";
     }
 
-    @RequestMapping("/testSchedulePage")
-    public String showTest(Model model) {
+    @RequestMapping("/add-schedule-item")
+    public String showAddScheduleItemForm(Model model) {
         List<StudentGroup> studentGroups = studentGroupService.getAllStudentGroups();
         List<Classroom> classrooms = classroomService.getAllClassrooms();
         List<Teacher> teachers = teacherService.getAllTeachers();
@@ -52,7 +52,7 @@ public class ScheduleItemController {
         model.addAttribute("classrooms", classrooms);
         model.addAttribute("teachers", teachers);
         model.addAttribute("scheduleItemDto", scheduleItemDto);
-        return "test-schedule-page";
+        return "add-schedule-item";
     }
 
     @PostMapping("/addScheduleItem")
@@ -66,4 +66,9 @@ public class ScheduleItemController {
         return "all-schedule-items";
     }
 
+    @GetMapping("/deleteScheduleItem/{scheduleItemId}")
+    public String deleteFaculty(@PathVariable("scheduleItemId") int scheduleItemId, Model model) {
+        scheduleItemService.deleteScheduleItem(scheduleItemId);
+        return "redirect:/getAllScheduleItems";
+    }
 }

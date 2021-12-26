@@ -5,23 +5,27 @@
 <body align="center">
 <h2>All Schedule Items</h2>
 <br>
-<table align="center">
-
-    <tr th:each="studentGroup : ${studentGroups}">
-        <td th:text="${studentGroup.groupName}"></td>
-        <td th:text="${studentGroup.faculty.name}"></td>
-        <td><a th:href="@{/editStudentGroup/{id}(id=${studentGroup.id})}">Edit</a></td>
-        <td><a th:href="@{/deleteStudentGroup/{id}(id=${studentGroup.id})}">Delete</a></td>
+<table align="center" border="1">
+    <tr>
+        <th>Begin Time</th>
+        <th>End Time</th>
+        <th>Lesson</th>
+        <th>Group</th>
+        <th>Classroom</th>
+        <th>Teacher</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="scheduleItem : ${scheduleItems}">
+        <td th:text="${#dates.format(scheduleItem.beginTime, 'dd.MM.yyyy HH:mm')}"></td>
+        <td th:text="${#dates.format(scheduleItem.endTime, 'dd.MM.yyyy HH:mm')}"></td>
+        <td th:text="${scheduleItem.lessonName}"></td>
+        <td th:text="${scheduleItem.studentGroup.groupName}"></td>
+        <td th:text="${scheduleItem.classroom.classroomName} + ' (' + ${scheduleItem.classroom.classroomNumber}+ ')'"></td>
+        <td th:text="${scheduleItem.teacher.teacherName} + ' ' + ${scheduleItem.teacher.teacherSurName} + '(dep:'+${scheduleItem.teacher.department.name}+')'"></td>
+        <td><a th:href="@{/editScheduleItem/{scheduleItemId}(scheduleItemId=${scheduleItem.id})}">Edit</a></td>
+        <td><a th:href="@{/deleteScheduleItem/{scheduleItemId}(scheduleItemId=${scheduleItem.id})}">Delete</a></td>
     </tr>
 </table>
-
-<div class="form-group blu-margin">
-    <select class="form-control" th:field="${studentGroup.id}" id="dropOperator">
-        <option value="0">select operator</option>
-        <option th:each="studentGroup : ${studentGroups}" th:value="${studentGroup.id}"
-                th:text="${studentGroup.groupName}"></option>
-    </select>
-</div>
 <br>
 </body>
 </html>

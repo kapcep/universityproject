@@ -5,7 +5,7 @@
 <body align="center">
 <h2>All Faculties</h2>
 <br>
-<table align="center">
+<table align="center" border="1">
     <tr>
         <th>Faculty Name</th>
         <th>Edit</th>
@@ -17,11 +17,9 @@
         <td><a th:href="@{/deleteFaculty/{id}(id=${faculty.id})}">Delete</a></td>
     </tr>
 </table>
-<p><a href="addNewFaculty">Add a new Faculty</a></p>
-<p><a href="getAllStudentGroups" target="_blank">Get all Student Groups</a></p>
-<p><a href="getAllDepartments" target="_blank">Get all Departments</a></p>
-<p><a href="getAllStudents" target="_blank">Get all Students</a></p>
-<p><a href="getAllTeachers" target="_blank">Get all Teachers</a></p>
-
+<br>
+<button onclick="window.location.href='addNewFaculty'">Add a new Faculty</button>
+<button onclick="window.open('add-schedule-item')" target="_blank">Add Schedule Item</button>
+<button onclick="window.open('getAllScheduleItems')" target="_blank">Get All Schedule Items</button>
 </body>
 </html>
