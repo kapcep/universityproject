@@ -63,7 +63,7 @@ public class ScheduleItemController {
         scheduleItemService.saveScheduleItem(beginDate, endDate, scheduleItemDto.getLessonName(),
                 scheduleItemDto.getClassroomId(), scheduleItemDto.getStudentGroupId(), scheduleItemDto.getTeacherId());
 
-        return "all-schedule-items";
+        return "redirect:/getAllScheduleItems";
     }
 
     @GetMapping("/deleteScheduleItem/{scheduleItemId}")
@@ -81,9 +81,15 @@ public class ScheduleItemController {
                 dateFormat.format(scheduleItem.getEndTime()), scheduleItem.getLessonName(),
                 scheduleItem.getClassroom().getId(), scheduleItem.getStudentGroup().getId(),
                 scheduleItem.getTeacher().getId());
-        model.addAttribute("scheduleItemId", scheduleItemId);
-        model.addAttribute("scheduleItemDto",scheduleItemDto);
 
+        List<StudentGroup> studentGroups = studentGroupService.getAllStudentGroups();
+        List<Classroom> classrooms = classroomService.getAllClassrooms();
+        List<Teacher> teachers = teacherService.getAllTeachers();
+        model.addAttribute("scheduleItemId", scheduleItemId);
+        model.addAttribute("scheduleItemDto", scheduleItemDto);
+        model.addAttribute("studentGroups", studentGroups);
+        model.addAttribute("classrooms", classrooms);
+        model.addAttribute("teachers", teachers);
 
         return "update-schedule-item";
     }

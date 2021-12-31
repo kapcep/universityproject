@@ -6,9 +6,46 @@
 </head>
 <body align="center">
 <h2>Update Schedule Item</h2>
-<form action="#" th:action="@{/updateScheduleItem/{scheduleItemId}(scheduleItemId=${scheduleItemId})}" method="post" >
-    <input type="text" th:value="${scheduleItemDto}" name="scheduleItemDto"/>
+<form action="#" th:action="@{/updateScheduleItem/{scheduleItemId}(scheduleItemId=${scheduleItemId})}" method="post"
+      th:object="${scheduleItemDto}">
+    <br>
+    <label>Begin Time:</label>
+    <input type="datetime-local" th:field="*{beginDate}" th:value="${scheduleItemDto.beginDate}"/>
+    <br>
+    <label>End Time:</label>
+    <input type="datetime-local" th:field="*{endDate}" th:value="${scheduleItemDto.endDate}"/>
+    <br>
+    <label>Lesson Name:</label>
+    <input type="text" th:field="*{lessonName}" th:value="${scheduleItemDto.lessonName}"/>
+    <br>
+    <label>Student Group:</label>
+    <select th:field="*{studentGroupId}">
+        <option th:each="studentGroup: ${studentGroups}"
+                th:text="${studentGroup.groupName}"
+                th:selected="(${studentGroup.id} == ${scheduleItemDto.studentGroupId})"
+                th:value="${studentGroup.id}">
+        </option>
+    </select>
+    <br>
+    <label>Classroom:</label>
+    <select th:field="*{classroomId}">
+        <option th:each="classroom: ${classrooms}"
+                th:text="${classroom.classroomName} + ' (' + ${classroom.classroomNumber}+ ')'"
+                th:selected="(${classroom.id} == ${scheduleItemDto.classroomId})"
+                th:value="${classroom.id}">
+        </option>
+    </select>
+    <br>
+    <label>Teacher:</label>
+    <select th:field="*{teacherId}">
+        <option th:each="teacher: ${teachers}"
+                th:text="${teacher.teacherName} + ' ' + ${teacher.teacherSurName}"
+                th:selected="(${teacher.id} == ${scheduleItemDto.teacherId})"
+                th:value="${teacher.id}">
+        </option>
+    </select>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+
 </form>
 <br>
 
