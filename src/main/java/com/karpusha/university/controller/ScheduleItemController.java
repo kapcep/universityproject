@@ -1,14 +1,8 @@
 package com.karpusha.university.controller;
 
 import com.karpusha.university.dto.ScheduleItemDto;
-import com.karpusha.university.entity.Classroom;
-import com.karpusha.university.entity.ScheduleItem;
-import com.karpusha.university.entity.StudentGroup;
-import com.karpusha.university.entity.Teacher;
-import com.karpusha.university.service.ClassroomService;
-import com.karpusha.university.service.ScheduleItemService;
-import com.karpusha.university.service.StudentGroupService;
-import com.karpusha.university.service.TeacherService;
+import com.karpusha.university.entity.*;
+import com.karpusha.university.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ScheduleItemController {
@@ -33,6 +28,9 @@ public class ScheduleItemController {
 
     @Autowired
     ScheduleItemService scheduleItemService;
+
+    @Autowired
+    StudentService studentService;
 
     @RequestMapping("/getAllScheduleItems")
     public String showAllScheduleItems(Model model) {
@@ -104,4 +102,19 @@ public class ScheduleItemController {
 
         return "redirect:/getAllScheduleItems";
     }
+
+    @GetMapping("/getStudentDaySchedule/{studentId}")
+    public String getStudentDaySchedule(@PathVariable("studentId")
+                                                int studentId, Model model) {
+        Student student = studentService.getStudent(studentId);
+        int studentGroupId = student.getStudentGroup().getId();
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        scheduleItems = scheduleItems
+                .stream()
+                .filter(s -> s.getStudentGroup().getId() == studentGroupId)
+                .collect(Collectors.toList());
+        model.addAttribute("scheduleItems", scheduleItems);
+        return "student-day-schedule";
+    }
+
 }
