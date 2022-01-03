@@ -2,10 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Day Schedule</title>
+    <title>Student Month Schedule</title>
 
 </head>
-<body>
-<input type="month">
+<body align="center">
+<h2>Choose Student Month Schedule</h2>
+<label th:text=" ${student.studentSurName} + ' ' + ${student.studentName}"></label>
+
+
+<form action="#" th:action="@{/getStudentMonthScheduleList/{studentId}(studentId=${student.id})}"
+      th:object="${datePickerDto}" method="post" target="_blank">
+    <p>Date: <input type="month" th:value="*{chosenDate}" th:field="*{chosenDate}"></p>
+    <p><input type="submit" value="Show Month Schedule"/>
+</form>
 </body>
 </html>

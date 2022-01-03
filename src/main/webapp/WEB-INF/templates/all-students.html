@@ -23,8 +23,8 @@
         <td th:text="${student.studentGroup.groupName}"></td>
         <td><a th:href="@{/editStudent/{studentId}(studentId=${student.id})}" target="_blank">Edit</a></td>
         <td><a th:href="@{/deleteStudent/{studentId}(studentId=${student.id})}">Delete</a></td>
-        <td><a th:href="@{/getStudentDaySchedule/{studentId}(studentId=${student.id})}" target="_blank">Day</a></td>
-        <td><a th:href="@{/getStudentMonthSchedule/{studentId}(studentId=${student.id})}" target="_blank">Month</a></td>
+        <td><a th:href="@{/getStudentDaySchedulePage/{studentId}(studentId=${student.id})}" target="_blank">Day</a></td>
+        <td><a th:href="@{/getStudentMonthSchedulePage/{studentId}(studentId=${student.id})}" target="_blank">Month</a></td>
     </tr>
 </table>
 <br>

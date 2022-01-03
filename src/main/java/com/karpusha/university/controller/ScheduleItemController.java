@@ -1,5 +1,6 @@
 package com.karpusha.university.controller;
 
+import com.karpusha.university.dto.DatePickerDto;
 import com.karpusha.university.dto.ScheduleItemDto;
 import com.karpusha.university.entity.*;
 import com.karpusha.university.service.*;
@@ -103,18 +104,65 @@ public class ScheduleItemController {
         return "redirect:/getAllScheduleItems";
     }
 
-    @GetMapping("/getStudentDaySchedule/{studentId}")
-    public String getStudentDaySchedule(@PathVariable("studentId")
-                                                int studentId, Model model) {
+    @GetMapping("/getStudentDaySchedulePage/{studentId}")
+    public String showFormStudentDaySchedule(@PathVariable("studentId")
+                                                     int studentId, Model model) {
+        Student student = studentService.getStudent(studentId);
+        DatePickerDto datePickerDto = new DatePickerDto();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        datePickerDto.setChosenDate("2021-12-01");
+        model.addAttribute("student", student);
+        model.addAttribute("datePickerDto", datePickerDto);
+        return "student-day-schedule";
+    }
+
+    @PostMapping("/getStudentDayScheduleList/{studentId}")
+    public String getStudentDaySchedule(@PathVariable("studentId") int studentId, @ModelAttribute DatePickerDto datePickerDto,
+                                        Model model) throws ParseException {
         Student student = studentService.getStudent(studentId);
         int studentGroupId = student.getStudentGroup().getId();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+
         List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
         scheduleItems = scheduleItems
                 .stream()
-                .filter(s -> s.getStudentGroup().getId() == studentGroupId)
+                .filter(s -> s.getStudentGroup().getId() == studentGroupId &&
+                        dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
                 .collect(Collectors.toList());
         model.addAttribute("scheduleItems", scheduleItems);
-        return "student-day-schedule";
+
+        return "all-schedule-items";
+    }
+
+    @GetMapping("/getStudentMonthSchedulePage/{studentId}")
+    public String showFormStudentMonthSchedule(@PathVariable("studentId")
+                                                       int studentId, Model model) {
+        Student student = studentService.getStudent(studentId);
+        DatePickerDto datePickerDto = new DatePickerDto();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        datePickerDto.setChosenDate("2021-12");
+        model.addAttribute("student", student);
+        model.addAttribute("datePickerDto", datePickerDto);
+        return "student-month-schedule";
+    }
+
+    @PostMapping("/getStudentMonthScheduleList/{studentId}")
+    public String getStudentMonthSchedule(@PathVariable("studentId") int studentId, @ModelAttribute DatePickerDto datePickerDto,
+                                          Model model) throws ParseException {
+        Student student = studentService.getStudent(studentId);
+        int studentGroupId = student.getStudentGroup().getId();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        scheduleItems = scheduleItems
+                .stream()
+                .filter(s -> s.getStudentGroup().getId() == studentGroupId &&
+                        dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
+                .collect(Collectors.toList());
+        model.addAttribute("scheduleItems", scheduleItems);
+
+        return "all-schedule-items";
     }
 
 }
