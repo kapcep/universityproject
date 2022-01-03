@@ -13,6 +13,8 @@
         <th>Department</th>
         <th>Edit</th>
         <th>Delete</th>
+        <th>Day Schedule</th>
+        <th>Month Schedule</th>
     </tr>
     <tr th:each="teacher : ${allTeachers}">
         <td th:text="${teacher.teacherSurName}"></td>
@@ -21,6 +23,8 @@
         <td th:text="${teacher.department.name}"></td>
         <td><a th:href="@{/editTeacher/{teacherId}(teacherId=${teacher.id})}" target="_blank">Edit</a></td>
         <td><a th:href="@{/deleteTeacher/{teacherId}(teacherId=${teacher.id})}">Delete</a></td>
+        <td><a th:href="@{/getTeacherDaySchedulePage/{teacherId}(teacherId=${teacher.id})}" target="_blank">Day</a></td>
+        <td><a th:href="@{/getTeacherMonthSchedulePage/{teacherId}(teacherId=${teacher.id})}" target="_blank">Month</a></td>
     </tr>
 </table>
 <br>

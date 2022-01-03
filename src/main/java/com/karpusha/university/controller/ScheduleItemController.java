@@ -165,4 +165,59 @@ public class ScheduleItemController {
         return "all-schedule-items";
     }
 
+    @GetMapping("/getTeacherDaySchedulePage/{teacherId}")
+    public String showFormTeacherDaySchedule(@PathVariable("teacherId")
+                                                     int teacherId, Model model) {
+
+        Teacher teacher = teacherService.getTeacher(teacherId);
+        DatePickerDto datePickerDto = new DatePickerDto();
+        datePickerDto.setChosenDate("2021-12-01");
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("datePickerDto", datePickerDto);
+        return "teacher-day-schedule";
+    }
+
+    @PostMapping("/getTeacherDayScheduleList/{teacherId}")
+    public String getTeacherDaySchedule(@PathVariable("teacherId") int teacherId, @ModelAttribute DatePickerDto datePickerDto,
+                                        Model model) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        scheduleItems = scheduleItems
+                .stream()
+                .filter(s -> s.getTeacher().getId() == teacherId &&
+                        dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
+                .collect(Collectors.toList());
+        model.addAttribute("scheduleItems", scheduleItems);
+
+        return "all-schedule-items";
+    }
+
+    @GetMapping("/getTeacherMonthSchedulePage/{teacherId}")
+    public String showFormTeacherMonthSchedule(@PathVariable("teacherId")
+                                                       int teacherId, Model model) {
+
+        Teacher teacher = teacherService.getTeacher(teacherId);
+        DatePickerDto datePickerDto = new DatePickerDto();
+        datePickerDto.setChosenDate("2021-12");
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("datePickerDto", datePickerDto);
+        return "teacher-month-schedule";
+    }
+
+    @PostMapping("/getTeacherMonthScheduleList/{teacherId}")
+    public String getTeacherMonthSchedule(@PathVariable("teacherId") int teacherId, @ModelAttribute DatePickerDto datePickerDto,
+                                          Model model) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        scheduleItems = scheduleItems
+                .stream()
+                .filter(s -> s.getTeacher().getId() == teacherId &&
+                        dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
+                .collect(Collectors.toList());
+        model.addAttribute("scheduleItems", scheduleItems);
+
+        return "all-schedule-items";
+    }
 }

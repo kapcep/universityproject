@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Day Schedule</title>
+
+</head>
+<body align="center">
+<h2>Choose Teacher Day Schedule</h2>
+<label th:text=" ${teacher.teacherSurName} + ' ' + ${teacher.teacherName}"></label>
+
+
+<form action="#" th:action="@{/getTeacherDayScheduleList/{teacherId}(teacherId=${teacher.id})}"
+      th:object="${datePickerDto}" method="post" target="_blank">
+    <p>Date: <input type="date" th:value="*{chosenDate}" th:field="*{chosenDate}"></p>
+    <p><input type="submit" value="Show Day Schedule"/>
+</form>
+</body>
+</html>
