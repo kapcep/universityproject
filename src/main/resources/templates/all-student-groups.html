@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>All Student Groups</title>
+</head>
+<body  align="center">
+<h2>All Student Groups</h2>
+<br>
+<table  align="center" border="1">
+    <tr>
+        <th>Student Group Name</th>
+        <th>Faculty Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="studentGroup : ${allStudentGroups}">
+        <td th:text="${studentGroup.groupName}"></td>
+        <td th:text="${studentGroup.faculty.name}"></td>
+        <td><a th:href="@{/editStudentGroup/{id}(id=${studentGroup.id})}">Edit</a></td>
+        <td><a th:href="@{/deleteStudentGroup/{id}(id=${studentGroup.id})}">Delete</a></td>
+    </tr>
+</table>
+<br>
+</body>
+</html>

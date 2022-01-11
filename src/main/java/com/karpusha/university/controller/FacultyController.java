@@ -1,6 +1,5 @@
 package com.karpusha.university.controller;
 
-import com.karpusha.university.dao.FacultyDao;
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
@@ -15,10 +16,13 @@ public class FacultyDaoImpl implements FacultyDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Override
     public List<Faculty> getAllFaculties() {
-
-        Session session = sessionFactory.getCurrentSession();
+//        Session session = sessionFactory.getCurrentSession();
+        Session session = entityManager.unwrap(Session.class);
         List<Faculty> allFaculties = session.createQuery("from Faculty", Faculty.class).getResultList();
 
         return allFaculties;

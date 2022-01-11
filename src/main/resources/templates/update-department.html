@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Department</title>
+</head>
+<body align="center">
+<h2>Update Department</h2>
+<form action="#" th:action="@{/updateDepartment/{departmentId}(departmentId=${departmentId})}" method="post">
+    <input type="text" th:value="${departmentName}" name="departmentName"/>
+    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+</form>
+<br>
+<a th:href="@{/addNewTeacher/{departmentId}(departmentId=${departmentId})}">Add new Teacher</a>
+<p><a th:href="@{/getTeachersInDepartment/{departmentId}(departmentId=${departmentId})}" target="_blank">Get Teachers in
+    Department</a></p>
+</body>
+</html>
