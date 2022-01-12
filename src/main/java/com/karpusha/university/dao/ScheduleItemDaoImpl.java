@@ -63,7 +63,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
         scheduleItem.setLessonName(lessonName);
         scheduleItem.setClassroom(classroom);
         scheduleItem.setStudentGroup(studentGroup);
-        scheduleItem.setTeacher(teacher);
-
+        scheduleItem.setTeacher(teacher); 
+        /*глянути на метод оновлення, де він*/
     }
 }
