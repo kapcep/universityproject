@@ -4,6 +4,8 @@ import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.FacultyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,17 +13,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @Controller
 public class FacultyController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FacultyController.class);
 
     @Autowired
     private FacultyService facultyService;
 
     @RequestMapping("/")
     public String showAllFaculties(Model model) {
+        LOG.debug("Entered showAllFaculties method");
         List<Faculty> allFaculties = facultyService.getAllFaculties();
         model.addAttribute("allFaculties", allFaculties);
-
+        LOG.debug("");
+        LOG.debug("Before return in showAllFaculties method");
         return "index";
     }
 
