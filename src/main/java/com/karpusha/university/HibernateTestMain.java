@@ -17,7 +17,7 @@ public class HibernateTestMain {
 //        Session currentSession = sessionFactory.getCurrentSession();
 //        currentSession.close();
 //        sessionFactory.close();
-        saveScheduleItem(getSessionFactory());
+try(saveScheduleItem(getSessionFactory());){}
 
     }
 
@@ -34,8 +34,7 @@ public class HibernateTestMain {
     }
 
     private static void saveScheduleItem(SessionFactory factory) {
-        Session session = null;
-        try {
+        try (Session session = factory.getCurrentSession()){
             session = factory.getCurrentSession();
             session.beginTransaction();
             Classroom classroom = session.get(Classroom.class, 1);
@@ -46,23 +45,16 @@ public class HibernateTestMain {
 
             session.save(new ScheduleItem(new Date(),new Date(),"Philosophy Java",classroom,studentGroup,teacher));
             //session.getTransaction().commit();
-        } finally {
-            session.close();
-            factory.close();
-        }
+        } 
     }
 
 
     private static void saveClassroom(SessionFactory factory, Classroom classroom) {
-        Session session = null;
-        try {
+        try (Session session = factory.getCurrentSession()){
             session = factory.getCurrentSession();
             session.beginTransaction();
             session.save(classroom);
             session.getTransaction().commit();
-        } finally {
-            session.close();
-            factory.close();
         }
     }
 
