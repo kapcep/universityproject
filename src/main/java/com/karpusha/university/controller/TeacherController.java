@@ -26,7 +26,7 @@ public class TeacherController {
         return "all-teachers";
     }
 
-    @RequestMapping("/addNewTeacher/{departmentId}")
+    @GetMapping("/addNewTeacher/{departmentId}")
     public String addNewTeacher(@PathVariable("departmentId")
                                         int departmentId, Model model) {
         Teacher teacher = new Teacher();
@@ -36,7 +36,7 @@ public class TeacherController {
         return "add-teacher";
     }
 
-    @RequestMapping("/saveTeacher/{departmentId}")
+    @GetMapping("/saveTeacher/{departmentId}")
     public String saveTeacher(@ModelAttribute("teacher") Teacher teacher,
                               @PathVariable("departmentId")
                                       int departmentId, Model model) {
@@ -67,8 +67,7 @@ public class TeacherController {
 
     @GetMapping("/deleteTeacher/{teacherId}")
     public String deleteTeacher(@PathVariable("teacherId") int teacherId, Model model) {
-        int departmentId = teacherService.getTeacher(teacherId).getDepartment().getId();
-        teacherService.deleteTeacher(teacherId);
+        int departmentId = teacherService.deleteTeacher(teacherId);
         return "redirect:/getTeachersInDepartment/" + departmentId;
     }
 

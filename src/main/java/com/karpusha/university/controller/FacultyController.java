@@ -22,7 +22,7 @@ public class FacultyController {
     @Autowired
     private FacultyService facultyService;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String showAllFaculties(Model model) {
         LOG.debug("Entered showAllFaculties method");
         List<Faculty> allFaculties = facultyService.getAllFaculties();
@@ -32,7 +32,7 @@ public class FacultyController {
         return "index";
     }
 
-    @RequestMapping("/addNewFaculty")
+    @GetMapping("/addNewFaculty")
     public String addNewFaculty(Model model) {
         Faculty faculty = new Faculty();
         model.addAttribute("faculty", faculty);
@@ -40,7 +40,7 @@ public class FacultyController {
         return "add-faculty";
     }
 
-    @RequestMapping("/saveFaculty")
+    @GetMapping("/saveFaculty")
     public String saveFaculty(@ModelAttribute("faculty") Faculty faculty) {
         facultyService.saveFaculty(faculty);
         return "redirect:/";

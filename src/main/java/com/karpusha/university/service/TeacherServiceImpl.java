@@ -2,6 +2,7 @@ package com.karpusha.university.service;
 
 import com.karpusha.university.dao.TeacherDao;
 import com.karpusha.university.entity.Teacher;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,12 +31,17 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional
     @Override
     public Teacher getTeacher(int teacherId) {
-        return teacherDao.getTeacher(teacherId);
+        Teacher teacher = teacherDao.getTeacher(teacherId);
+        Hibernate.initialize(teacher.getDepartment());
+        return teacher;
     }
 
     @Transactional
     @Override
-    public void deleteTeacher(int teacherId) {
+    public int deleteTeacher(int teacherId) {
+        Teacher teacher = getTeacher(teacherId);
+        int departmentId = teacher.getDepartment().getId();
         teacherDao.deleteTeacher(teacherId);
+        return departmentId;
     }
 }

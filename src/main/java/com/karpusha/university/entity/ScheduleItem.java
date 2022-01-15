@@ -2,6 +2,7 @@ package com.karpusha.university.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "schedule_items")
@@ -101,5 +102,24 @@ public class ScheduleItem {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScheduleItem that = (ScheduleItem) o;
+        return id == that.id &&
+                beginTime.equals(that.beginTime) &&
+                endTime.equals(that.endTime) &&
+                lessonName.equals(that.lessonName) &&
+                classroom.equals(that.classroom) &&
+                studentGroup.equals(that.studentGroup) &&
+                teacher.equals(that.teacher);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, beginTime, endTime, lessonName, classroom, studentGroup, teacher);
     }
 }

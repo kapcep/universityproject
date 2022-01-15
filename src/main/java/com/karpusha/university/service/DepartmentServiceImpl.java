@@ -2,6 +2,7 @@ package com.karpusha.university.service;
 
 import com.karpusha.university.dao.DepartmentDao;
 import com.karpusha.university.entity.Department;
+import com.karpusha.university.entity.Teacher;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,13 +38,22 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Transactional
     @Override
-    public void deleteDepartment(int departmentId) {
+    public int deleteDepartment(int departmentId) {
+        Department department = getDepartment(departmentId);
+        int facultyId = department.getFaculty().getId();
         departmentDao.deleteDepartment(departmentId);
+        return  facultyId;
     }
 
     @Transactional
     @Override
     public void updateDepartmentName(int departmentId, String departmentName) {
         departmentDao.updateDepartmentName(departmentId, departmentName);
+    }
+
+    @Override
+    public List<Teacher> getTeachersOfDepartment(int departmentId) {
+        Department department = getDepartment(departmentId);
+        return department.getTeachers();
     }
 }

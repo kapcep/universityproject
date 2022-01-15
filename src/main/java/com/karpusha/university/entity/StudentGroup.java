@@ -3,6 +3,7 @@ package com.karpusha.university.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "student_groups")
@@ -72,5 +73,21 @@ public class StudentGroup {
                 "id=" + id +
                 ", groupName='" + groupName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentGroup that = (StudentGroup) o;
+        return id == that.id &&
+                groupName.equals(that.groupName) &&
+                faculty.equals(that.faculty) &&
+                students.equals(that.students);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, groupName, faculty, students);
     }
 }

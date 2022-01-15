@@ -52,5 +52,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Session session = sessionFactory.getCurrentSession();
         Department department = session.get(Department.class, departmentId);
         department.setName(departmentName);
+        session.saveOrUpdate(department);
     }
 }

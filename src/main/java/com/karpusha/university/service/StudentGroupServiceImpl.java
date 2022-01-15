@@ -1,6 +1,7 @@
 package com.karpusha.university.service;
 
 import com.karpusha.university.dao.StudentGroupDao;
+import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,22 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Transactional
     @Override
-    public void deleteStudentGroup(int id) {
+    public int deleteStudentGroup(int id) {
+        StudentGroup studentGroup = getStudentGroup(id);
+        int facultyId = studentGroup.getFaculty().getId();
         studentGroupDao.deleteStudentGroup(id);
+        return facultyId;
     }
 
     @Transactional
     @Override
     public void updateStudentGroupName(int studentGroupId, String studentGroupName) {
         studentGroupDao.updateStudentGroupName(studentGroupId, studentGroupName);
+    }
+
+    @Override
+    public List<Student> getStudentsOfStudentGroup(int studentGroupId) {
+        StudentGroup studentGroup = getStudentGroup(studentGroupId);
+        return studentGroup.getStudents();
     }
 }

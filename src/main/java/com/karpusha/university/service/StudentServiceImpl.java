@@ -2,6 +2,7 @@ package com.karpusha.university.service;
 
 import com.karpusha.university.dao.StudentDao;
 import com.karpusha.university.entity.Student;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,12 +30,18 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     @Override
     public Student getStudent(int studentId) {
-        return studentDao.getStudent(studentId);
+        Student student = studentDao.getStudent(studentId);
+        Hibernate.initialize(student.getStudentGroup());
+        return student;
+
     }
 
     @Transactional
     @Override
-    public void deleteStudent(int studentId) {
+    public int deleteStudent(int studentId) {
+        Student student = getStudent(studentId);
+        int studentGroupId = student.getStudentGroup().getId();
         studentDao.deleteStudent(studentId);
+        return studentGroupId;
     }
 }

@@ -12,7 +12,7 @@ public interface ClassroomService {
 
     public Classroom getClassroom(int classroomId);
 
-    public void deleteClassroom(int classroomId);
+    public int deleteClassroom(int classroomId);
 
     public void updateClassroom(int classroomId, String classroomName, int classroomNumber, Department department);
 }

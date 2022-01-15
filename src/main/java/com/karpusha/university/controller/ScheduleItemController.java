@@ -33,14 +33,14 @@ public class ScheduleItemController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping("/getAllScheduleItems")
+    @GetMapping("/getAllScheduleItems")
     public String showAllScheduleItems(Model model) {
         List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
         model.addAttribute("scheduleItems", scheduleItems);
         return "all-schedule-items";
     }
 
-    @RequestMapping("/add-schedule-item")
+    @GetMapping("/add-schedule-item")
     public String showAddScheduleItemForm(Model model) {
         List<StudentGroup> studentGroups = studentGroupService.getAllStudentGroups();
         List<Classroom> classrooms = classroomService.getAllClassrooms();

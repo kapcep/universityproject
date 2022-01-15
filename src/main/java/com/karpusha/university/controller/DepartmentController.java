@@ -8,7 +8,10 @@ import com.karpusha.university.service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -19,14 +22,14 @@ public class DepartmentController {
     @Autowired
     private FacultyService facultyService;
 
-    @RequestMapping("/getAllDepartments")
+    @GetMapping("/getAllDepartments")
     public String showAllDepartments(Model model) {
         List<Department> allDepartments = departmentService.getAllDepartment();
         model.addAttribute("allDepartments", allDepartments);
         return "all-departments";
     }
 
-    @RequestMapping("/addDepartment/{id}")
+    @GetMapping("/addDepartment/{id}")
     public String addNewDepartment(@PathVariable("id")
                                            int facultyId, Model model) {
         Department department = new Department();
@@ -36,7 +39,7 @@ public class DepartmentController {
         return "add-department";
     }
 
-    @RequestMapping("/saveDepartment/{facultyId}")
+    @GetMapping("/saveDepartment/{facultyId}")
     public String saveDepartment(@ModelAttribute("department") Department department,
                                  @PathVariable("facultyId")
                                          int facultyId, Model model) {
@@ -65,15 +68,13 @@ public class DepartmentController {
 
     @GetMapping("/deleteDepartment/{departmentId}")
     public String deleteDepartment(@PathVariable("departmentId") int departmentId, Model model) {
-        int facultyId = departmentService.getDepartment(departmentId).getFaculty().getId();
-        departmentService.deleteDepartment(departmentId);
+        int facultyId = departmentService.deleteDepartment(departmentId);
         return "redirect:/getDepartmentsInFaculty/" + facultyId;
     }
 
     @GetMapping("/getTeachersInDepartment/{departmentId}")
     public String getTeachersInDepartment(@PathVariable("departmentId") int departmentId, Model model) {
-        Department department = departmentService.getDepartment(departmentId);
-        List<Teacher> allTeachers = department.getTeachers();
+        List<Teacher> allTeachers = departmentService.getTeachersOfDepartment(departmentId);
         model.addAttribute("allTeachers", allTeachers);
         return "all-teachers";
     }

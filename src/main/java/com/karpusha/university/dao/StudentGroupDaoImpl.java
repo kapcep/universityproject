@@ -51,5 +51,6 @@ public class StudentGroupDaoImpl implements StudentGroupDao {
         Session session = sessionFactory.getCurrentSession();
         StudentGroup studentGroup = session.get(StudentGroup.class, studentGroupId);
         studentGroup.setGroupName(studentGroupName);
+        session.saveOrUpdate(studentGroup);
     }
 }

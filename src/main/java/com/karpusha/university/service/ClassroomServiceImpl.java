@@ -38,8 +38,11 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Transactional
     @Override
-    public void deleteClassroom(int classroomId) {
+    public int deleteClassroom(int classroomId) {
+        Classroom classroom = getClassroom(classroomId);
+        int departmentId = classroom.getDepartment().getId();
         classroomDao.deleteClassroom(classroomId);
+        return departmentId;
     }
 
     @Transactional

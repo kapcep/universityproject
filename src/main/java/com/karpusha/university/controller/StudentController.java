@@ -20,14 +20,14 @@ public class StudentController {
     @Autowired
     private StudentGroupService studentGroupService;
 
-    @RequestMapping("/getAllStudents")
+    @GetMapping("/getAllStudents")
     public String showAllStudents(Model model) {
         List<Student> allStudents = studentService.getAllStudents();
         model.addAttribute("allStudents", allStudents);
         return "all-students";
     }
 
-    @RequestMapping("/addNewStudent/{id}")
+    @GetMapping("/addNewStudent/{id}")
     public String addNewStudent(@PathVariable("id")
                                         int studentGroupId, Model model) {
 
@@ -69,8 +69,7 @@ public class StudentController {
 
     @GetMapping("/deleteStudent/{studentId}")
     public String deleteStudent(@PathVariable("studentId") int studentId, Model model) {
-        int studentGroupId = studentService.getStudent(studentId).getStudentGroup().getId();
-        studentService.deleteStudent(studentId);
+        int studentGroupId = studentService.deleteStudent(studentId);
         return "redirect:/getStudentsInStudentGroup/" + studentGroupId;
     }
 

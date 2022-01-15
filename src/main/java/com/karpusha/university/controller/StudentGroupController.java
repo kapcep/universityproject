@@ -8,7 +8,10 @@ import com.karpusha.university.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class StudentGroupController {
     FacultyService facultyService;
 
     //get all student group
-    @RequestMapping("/getAllStudentGroups")
+    @GetMapping("/getAllStudentGroups")
     public String showAllStudentGroups(Model model) {
         List<StudentGroup> allStudentGroups = studentGroupService.getAllStudentGroups();
         model.addAttribute("allStudentGroups", allStudentGroups);
@@ -29,7 +32,7 @@ public class StudentGroupController {
     }
 
     //save student group
-    @RequestMapping("/addNewStudentGroup/{id}")
+    @GetMapping("/addNewStudentGroup/{id}")
     public String addNewStudentsGroup(@PathVariable("id")
                                               int facultyId, Model model) {
         StudentGroup studentGroup = new StudentGroup();
@@ -39,7 +42,7 @@ public class StudentGroupController {
         return "add-student-group";
     }
 
-    @RequestMapping("/saveStudentGroup/{facultyId}")
+    @GetMapping("/saveStudentGroup/{facultyId}")
     public String saveStudentGroup(@ModelAttribute("studentGroup") StudentGroup studentGroup,
                                    @PathVariable("facultyId")
                                            int facultyId, Model model) {
@@ -69,17 +72,14 @@ public class StudentGroupController {
 
     @GetMapping("/deleteStudentGroup/{studentGroupId}")
     public String deleteStudentGroup(@PathVariable("studentGroupId") int studentGroupId, Model model) {
-        int facultyId = studentGroupService.getStudentGroup(studentGroupId).getFaculty().getId();
-        studentGroupService.deleteStudentGroup(studentGroupId);
+        int facultyId = studentGroupService.deleteStudentGroup(studentGroupId);
         return "redirect:/getStudentGroupsInFaculty/" + facultyId;
     }
 
     @GetMapping("/getStudentsInStudentGroup/{studentGroupId}")
     public String getStudentsInStudentGroup(@PathVariable("studentGroupId") int studentGroupId, Model model) {
-        StudentGroup studentGroup = studentGroupService.getStudentGroup(studentGroupId);
-        List<Student> allStudents = studentGroup.getStudents();
+        List<Student> allStudents = studentGroupService.getStudentsOfStudentGroup(studentGroupId);
         model.addAttribute("allStudents", allStudents);
-
         return "all-students";
     }
 

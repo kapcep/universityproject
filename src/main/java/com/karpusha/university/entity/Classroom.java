@@ -1,6 +1,7 @@
 package com.karpusha.university.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "classroom")
@@ -68,5 +69,21 @@ public class Classroom {
                 "classroomName='" + classroomName + '\'' +
                 ", classroomNumber=" + classroomNumber +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Classroom classroom = (Classroom) o;
+        return id == classroom.id &&
+                classroomNumber == classroom.classroomNumber &&
+                classroomName.equals(classroom.classroomName) &&
+                department.equals(classroom.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, classroomName, classroomNumber, department);
     }
 }

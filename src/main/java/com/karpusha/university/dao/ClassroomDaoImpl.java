@@ -53,5 +53,6 @@ public class ClassroomDaoImpl implements ClassroomDao {
         classroom.setClassroomName(classroomName);
         classroom.setClassroomNumber(classroomNumber);
         classroom.setDepartment(department);
+        session.saveOrUpdate(classroom);
     }
 }
