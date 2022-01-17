@@ -1,5 +1,6 @@
 package com.karpusha.university.dao;
 
+import com.karpusha.university.dto.ScheduleItemDto;
 import com.karpusha.university.entity.Classroom;
 import com.karpusha.university.entity.ScheduleItem;
 import com.karpusha.university.entity.StudentGroup;
@@ -10,6 +11,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,12 +30,14 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
     }
 
     @Override
-    public void saveScheduleItem(Date beginDate, Date endDate, String lessonName, int classroomId, int studentGroupId, int teacherId) {
+    public void saveScheduleItem(ScheduleItemDto scheduleItemDto) throws ParseException {
         Session session = sessionFactory.getCurrentSession();
-        Classroom classroom = session.get(Classroom.class, classroomId);
-        StudentGroup studentGroup = session.get(StudentGroup.class, studentGroupId);
-        Teacher teacher = session.get(Teacher.class, teacherId);
-        session.saveOrUpdate(new ScheduleItem(beginDate, endDate, lessonName, classroom, studentGroup, teacher));
+        Classroom classroom = session.get(Classroom.class, scheduleItemDto.getClassroomId());
+        StudentGroup studentGroup = session.get(StudentGroup.class, scheduleItemDto.getStudentGroupId());
+        Teacher teacher = session.get(Teacher.class, scheduleItemDto.getTeacherId());
+        Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
+        session.saveOrUpdate(new ScheduleItem(beginDate, endDate, scheduleItemDto.getLessonName(), classroom, studentGroup, teacher));
     }
 
     @Override
@@ -51,16 +56,17 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
     }
 
     @Override
-    public void updateScheduleItem(int scheduleItemId, Date beginDate, Date endDate, String lessonName,
-                                   int classroomId, int studentGroupId, int teacherId) {
+    public void updateScheduleItem(int scheduleItemId, ScheduleItemDto scheduleItemDto) throws ParseException {
         Session session = sessionFactory.getCurrentSession();
         ScheduleItem scheduleItem = session.get(ScheduleItem.class, scheduleItemId);
-        Classroom classroom = session.get(Classroom.class, classroomId);
-        StudentGroup studentGroup = session.get(StudentGroup.class, studentGroupId);
-        Teacher teacher = session.get(Teacher.class,teacherId);
+        Classroom classroom = session.get(Classroom.class, scheduleItemDto.getClassroomId());
+        StudentGroup studentGroup = session.get(StudentGroup.class, scheduleItemDto.getStudentGroupId());
+        Teacher teacher = session.get(Teacher.class, scheduleItemDto.getTeacherId());
+        Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
         scheduleItem.setBeginTime(beginDate);
         scheduleItem.setEndTime(endDate);
-        scheduleItem.setLessonName(lessonName);
+        scheduleItem.setLessonName(scheduleItemDto.getLessonName());
         scheduleItem.setClassroom(classroom);
         scheduleItem.setStudentGroup(studentGroup);
         scheduleItem.setTeacher(teacher);

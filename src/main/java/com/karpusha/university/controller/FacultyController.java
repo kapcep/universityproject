@@ -3,6 +3,7 @@ package com.karpusha.university.controller;
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
+import com.karpusha.university.exception.AllFacultiesNullException;
 import com.karpusha.university.service.FacultyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,10 @@ public class FacultyController {
     public String showAllFaculties(Model model) {
         LOG.debug("Entered showAllFaculties method");
         List<Faculty> allFaculties = facultyService.getAllFaculties();
+        if (allFaculties == null) {
+            LOG.error("There are no faculties in database");
+            throw new AllFacultiesNullException("There are no faculties in database");
+        }
         model.addAttribute("allFaculties", allFaculties);
         LOG.debug("");
         LOG.debug("Before return in showAllFaculties method");

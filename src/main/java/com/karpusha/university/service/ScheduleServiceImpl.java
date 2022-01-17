@@ -1,12 +1,13 @@
 package com.karpusha.university.service;
 
 import com.karpusha.university.dao.ScheduleItemDao;
+import com.karpusha.university.dto.ScheduleItemDto;
 import com.karpusha.university.entity.ScheduleItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -23,8 +24,8 @@ public class ScheduleServiceImpl implements ScheduleItemService {
 
     @Transactional
     @Override
-    public void saveScheduleItem(Date beginDate, Date endDate, String lessonName, int classroomId, int studentGroupId, int teacherId) {
-        scheduleItemDao.saveScheduleItem(beginDate, endDate, lessonName, classroomId, studentGroupId, teacherId);
+    public void saveScheduleItem(ScheduleItemDto scheduleItemDto) throws ParseException {
+        scheduleItemDao.saveScheduleItem(scheduleItemDto);
     }
 
     @Transactional
@@ -41,9 +42,7 @@ public class ScheduleServiceImpl implements ScheduleItemService {
 
     @Transactional
     @Override
-    public void updateScheduleItem(int scheduleItemId, Date beginDate, Date endDate, String lessonName,
-                                   int classroomId, int studentGroupId, int teacherId) {
-        scheduleItemDao.updateScheduleItem(scheduleItemId, beginDate, endDate, lessonName,
-                classroomId, studentGroupId, teacherId);
+    public void updateScheduleItem(int scheduleItemId, ScheduleItemDto scheduleItemDto) throws ParseException {
+        scheduleItemDao.updateScheduleItem(scheduleItemId, scheduleItemDto);
     }
 }

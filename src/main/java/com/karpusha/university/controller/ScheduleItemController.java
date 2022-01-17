@@ -7,11 +7,13 @@ import com.karpusha.university.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,12 +58,7 @@ public class ScheduleItemController {
 
     @PostMapping("/addScheduleItem")
     public String addScheduleItem(@ModelAttribute ScheduleItemDto scheduleItemDto, Model model) throws ParseException {
-
-        Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
-        Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
-        scheduleItemService.saveScheduleItem(beginDate, endDate, scheduleItemDto.getLessonName(),
-                scheduleItemDto.getClassroomId(), scheduleItemDto.getStudentGroupId(), scheduleItemDto.getTeacherId());
-
+        scheduleItemService.saveScheduleItem(scheduleItemDto);
         return "redirect:/getAllScheduleItems";
     }
 
@@ -96,10 +93,8 @@ public class ScheduleItemController {
     @PostMapping("/updateScheduleItem/{scheduleItemId}")
     public String updateScheduleItem(@PathVariable("scheduleItemId") int scheduleItemId,
                                      @ModelAttribute ScheduleItemDto scheduleItemDto, Model model) throws ParseException {
-        Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
-        Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
-        scheduleItemService.updateScheduleItem(scheduleItemId, beginDate, endDate, scheduleItemDto.getLessonName(),
-                scheduleItemDto.getClassroomId(), scheduleItemDto.getStudentGroupId(), scheduleItemDto.getTeacherId());
+
+        scheduleItemService.updateScheduleItem(scheduleItemId, scheduleItemDto);
 
         return "redirect:/getAllScheduleItems";
     }
