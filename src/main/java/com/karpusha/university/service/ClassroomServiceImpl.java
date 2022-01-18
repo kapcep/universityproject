@@ -16,7 +16,6 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Autowired
     ClassroomDao classroomDao;
 
-    @Transactional
     @Override
     public List<Classroom> getAllClassrooms() {
         return classroomDao.getAllClassrooms();
@@ -28,7 +27,6 @@ public class ClassroomServiceImpl implements ClassroomService {
         classroomDao.saveClassroom(departmentId, classroom);
     }
 
-    @Transactional
     @Override
     public Classroom getClassroom(int classroomId) {
         Classroom classroom = classroomDao.getClassroom(classroomId);

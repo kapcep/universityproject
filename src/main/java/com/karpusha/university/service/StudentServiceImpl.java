@@ -15,7 +15,6 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentDao studentDao;
 
-    @Transactional
     @Override
     public List<Student> getAllStudents() {
         return studentDao.getAllStudents();
@@ -27,13 +26,11 @@ public class StudentServiceImpl implements StudentService {
         studentDao.saveStudent(student, studentGroupId);
     }
 
-    @Transactional
     @Override
     public Student getStudent(int studentId) {
         Student student = studentDao.getStudent(studentId);
         Hibernate.initialize(student.getStudentGroup());
         return student;
-
     }
 
     @Transactional

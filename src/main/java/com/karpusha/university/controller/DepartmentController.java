@@ -39,7 +39,7 @@ public class DepartmentController {
         return "add-department";
     }
 
-    @GetMapping("/saveDepartment/{facultyId}")
+    @PostMapping("/saveDepartment/{facultyId}")
     public String saveDepartment(@ModelAttribute("department") Department department,
                                  @PathVariable("facultyId")
                                          int facultyId, Model model) {

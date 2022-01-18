@@ -16,7 +16,6 @@ public class ScheduleServiceImpl implements ScheduleItemService {
     @Autowired
     ScheduleItemDao scheduleItemDao;
 
-    @Transactional
     @Override
     public List<ScheduleItem> getAllScheduleItems() {
         return scheduleItemDao.getAllScheduleItems();
@@ -28,7 +27,6 @@ public class ScheduleServiceImpl implements ScheduleItemService {
         scheduleItemDao.saveScheduleItem(scheduleItemDto);
     }
 
-    @Transactional
     @Override
     public ScheduleItem getScheduleItem(int scheduleItemId) {
         return scheduleItemDao.getScheduleItem(scheduleItemId);

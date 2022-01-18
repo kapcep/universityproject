@@ -16,7 +16,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private TeacherDao teacherDao;
 
-    @Transactional
     @Override
     public List<Teacher> getAllTeachers() {
         return teacherDao.getAllTeachers();
@@ -28,7 +27,6 @@ public class TeacherServiceImpl implements TeacherService {
         teacherDao.saveTeacher(teacher, departmentId);
     }
 
-    @Transactional
     @Override
     public Teacher getTeacher(int teacherId) {
         Teacher teacher = teacherDao.getTeacher(teacherId);

@@ -16,7 +16,6 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Autowired
     StudentGroupDao studentGroupDao;
 
-    @Transactional
     @Override
     public List<StudentGroup> getAllStudentGroups() {
         return studentGroupDao.getAllStudentGroups();
@@ -28,7 +27,6 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         studentGroupDao.saveStudentGroup(facultyId, studentGroup);
     }
 
-    @Transactional
     @Override
     public StudentGroup getStudentGroup(int id) {
         StudentGroup studentGroup = studentGroupDao.getStudentGroup(id);

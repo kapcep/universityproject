@@ -15,7 +15,6 @@ public class FacultyServiceImpl implements FacultyService {
     @Autowired
     private FacultyDao facultyDao;
 
-    @Transactional
     @Override
     public List<Faculty> getAllFaculties() {
         return facultyDao.getAllFaculties();
@@ -27,7 +26,6 @@ public class FacultyServiceImpl implements FacultyService {
         facultyDao.saveFaculty(faculty);
     }
 
-    @Transactional
     @Override
     public Faculty getFaculty(int id) {
         Faculty faculty = facultyDao.getFaculty(id);

@@ -16,7 +16,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     DepartmentDao departmentDao;
 
-    @Transactional
     @Override
     public List<Department> getAllDepartment() {
         return departmentDao.getAllDepartments();
@@ -28,7 +27,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentDao.saveDepartment(facultyId, department);
     }
 
-    @Transactional
     @Override
     public Department getDepartment(int departmentId) {
         Department department = departmentDao.getDepartment(departmentId);

@@ -6,11 +6,11 @@ import com.karpusha.university.entity.ScheduleItem;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.entity.Teacher;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,18 +20,18 @@ import java.util.List;
 public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private EntityManager entityManager;
 
     @Override
     public List<ScheduleItem> getAllScheduleItems() {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = entityManager.unwrap(Session.class);
         List<ScheduleItem> scheduleItems = session.createQuery("from ScheduleItem", ScheduleItem.class).getResultList();
         return scheduleItems;
     }
 
     @Override
     public void saveScheduleItem(ScheduleItemDto scheduleItemDto) throws ParseException {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = entityManager.unwrap(Session.class);
         Classroom classroom = session.get(Classroom.class, scheduleItemDto.getClassroomId());
         StudentGroup studentGroup = session.get(StudentGroup.class, scheduleItemDto.getStudentGroupId());
         Teacher teacher = session.get(Teacher.class, scheduleItemDto.getTeacherId());
@@ -42,14 +42,14 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public ScheduleItem getScheduleItem(int scheduleItemId) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = entityManager.unwrap(Session.class);
         ScheduleItem scheduleItem = session.get(ScheduleItem.class, scheduleItemId);
         return scheduleItem;
     }
 
     @Override
     public void deleteScheduleItem(int scheduleItemId) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = entityManager.unwrap(Session.class);
         Query<ScheduleItem> query = session.createQuery("delete from  ScheduleItem where id =:scheduleItemId");
         query.setParameter("scheduleItemId", scheduleItemId);
         query.executeUpdate();
@@ -57,7 +57,7 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public void updateScheduleItem(int scheduleItemId, ScheduleItemDto scheduleItemDto) throws ParseException {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = entityManager.unwrap(Session.class);
         ScheduleItem scheduleItem = session.get(ScheduleItem.class, scheduleItemId);
         Classroom classroom = session.get(Classroom.class, scheduleItemDto.getClassroomId());
         StudentGroup studentGroup = session.get(StudentGroup.class, scheduleItemDto.getStudentGroupId());

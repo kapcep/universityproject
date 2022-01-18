@@ -42,7 +42,7 @@ public class StudentGroupController {
         return "add-student-group";
     }
 
-    @GetMapping("/saveStudentGroup/{facultyId}")
+    @PostMapping("/saveStudentGroup/{facultyId}")
     public String saveStudentGroup(@ModelAttribute("studentGroup") StudentGroup studentGroup,
                                    @PathVariable("facultyId")
                                            int facultyId, Model model) {

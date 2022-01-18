@@ -27,7 +27,7 @@ public class StudentController {
         return "all-students";
     }
 
-    @GetMapping("/addNewStudent/{id}")
+    @RequestMapping("/addNewStudent/{id}")
     public String addNewStudent(@PathVariable("id")
                                         int studentGroupId, Model model) {
 

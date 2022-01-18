@@ -36,7 +36,7 @@ public class TeacherController {
         return "add-teacher";
     }
 
-    @GetMapping("/saveTeacher/{departmentId}")
+    @PostMapping("/saveTeacher/{departmentId}")
     public String saveTeacher(@ModelAttribute("teacher") Teacher teacher,
                               @PathVariable("departmentId")
                                       int departmentId, Model model) {
