@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,15 +26,14 @@ public class FacultyController {
 
     @GetMapping("/")
     public String showAllFaculties(Model model) {
-        LOG.debug("Entered showAllFaculties method");
+        LOG.info("Entered showAllFaculties method");
         List<Faculty> allFaculties = facultyService.getAllFaculties();
         if (allFaculties == null) {
             LOG.error("There are no faculties in database");
             throw new AllFacultiesNullException("There are no faculties in database");
         }
         model.addAttribute("allFaculties", allFaculties);
-        LOG.debug("");
-        LOG.debug("Before return in showAllFaculties method");
+        LOG.info("Before return in showAllFaculties method");
         return "index";
     }
 
