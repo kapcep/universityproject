@@ -1,6 +1,6 @@
 package com.karpusha.university.handler;
 
-import com.karpusha.university.exception.AllFacultiesNullException;
+import com.karpusha.university.exception.AllFacultiesHasNoSizeException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,7 +10,7 @@ public class FacultyExceptionHandler {
 
     @ExceptionHandler
     @ResponseBody
-    public String handleAllFacultiesNullException(AllFacultiesNullException exception) {
+    public String handleAllFacultiesNullException(AllFacultiesHasNoSizeException exception) {
         return exception.getMessage();
     }
 }

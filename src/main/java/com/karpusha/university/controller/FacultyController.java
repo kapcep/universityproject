@@ -3,7 +3,7 @@ package com.karpusha.university.controller;
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
-import com.karpusha.university.exception.AllFacultiesNullException;
+import com.karpusha.university.exception.AllFacultiesHasNoSizeException;
 import com.karpusha.university.service.FacultyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,9 +30,9 @@ public class FacultyController {
     public String showAllFaculties(Model model) {
         LOG.info("Entered showAllFaculties method");
         List<Faculty> allFaculties = facultyService.getAllFaculties();
-        if (allFaculties == null) {
+        if (allFaculties.size() == 0) {
             LOG.error("There are no faculties in database");
-            throw new AllFacultiesNullException("There are no faculties in database");
+            throw new AllFacultiesHasNoSizeException("There are no faculties in database");
         }
         model.addAttribute("allFaculties", allFaculties);
         LOG.info("Before return in showAllFaculties method");

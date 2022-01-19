@@ -1,10 +1,10 @@
 package com.karpusha.university.exception;
 
-public class AllFacultiesNullException extends RuntimeException {
+public class AllFacultiesHasNoSizeException extends RuntimeException {
     private String message;
 
 
-    public AllFacultiesNullException(String message) {
+    public AllFacultiesHasNoSizeException(String message) {
         this.setMessage(message);
     }
 
