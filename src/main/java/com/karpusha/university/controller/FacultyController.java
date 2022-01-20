@@ -3,7 +3,7 @@ package com.karpusha.university.controller;
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
-import com.karpusha.university.exception.AllFacultiesHasNoSizeException;
+import com.karpusha.university.exception.FacultyIsNullException;
 import com.karpusha.university.service.FacultyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,14 +28,8 @@ public class FacultyController {
 
     @GetMapping("/")
     public String showAllFaculties(Model model) {
-        LOG.info("Entered showAllFaculties method");
         List<Faculty> allFaculties = facultyService.getAllFaculties();
-        if (allFaculties.size() == 0) {
-            LOG.error("There are no faculties in database");
-            throw new AllFacultiesHasNoSizeException("There are no faculties in database");
-        }
         model.addAttribute("allFaculties", allFaculties);
-        LOG.info("Before return in showAllFaculties method");
         return "index";
     }
 
@@ -57,13 +51,16 @@ public class FacultyController {
     public String showFacultyUpdateForm(@PathVariable("id")
                                                 int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
+        if (faculty == null) {
+            LOG.error("Faculty not found in database");
+            throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");
+        }
         model.addAttribute("faculty", faculty);
         return "update-faculty";
     }
 
     @PostMapping("/updateFaculty/{id}")
     public String updateFaculty(@PathVariable("id") int id, @ModelAttribute("faculty") Faculty faculty, Model model) {
-
         faculty.setId(id);
         facultyService.saveFaculty(faculty);
         model.addAttribute("faculty", faculty);
@@ -88,10 +85,13 @@ public class FacultyController {
     @GetMapping("/getDepartmentsInFaculty/{id}")
     public String getDepartmentsInFaculty(@PathVariable("id") int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
+        if (faculty == null) {
+            LOG.error("Faculty not found in database");
+            throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");
+        }
         List<Department> departments = faculty.getDepartments();
         model.addAttribute("allDepartments", departments);
 
         return "all-departments";
     }
-
 }

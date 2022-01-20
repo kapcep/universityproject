@@ -2,8 +2,12 @@ package com.karpusha.university.controller;
 
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
+import com.karpusha.university.exception.FacultyIsNullException;
+import com.karpusha.university.exception.StudentIsNullException;
 import com.karpusha.university.service.StudentGroupService;
 import com.karpusha.university.service.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,8 @@ import java.util.List;
 
 @Controller
 public class StudentController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     private StudentService studentService;
@@ -42,6 +48,10 @@ public class StudentController {
     public String saveStudent(@ModelAttribute("student") Student student,
                               @PathVariable("studentGroupId")
                                       int studentGroupId, Model model) {
+        if (student == null) {
+            LOG.error("Student is not found");
+            throw new StudentIsNullException("Student error", "Student not found");
+        }
         studentService.saveStudent(student, studentGroupId);
         return "redirect:/editStudentGroup/" + studentGroupId;
     }
@@ -61,6 +71,10 @@ public class StudentController {
     public String updateStudent(@PathVariable("studentGroupId") int studentGroupId,
                                 @PathVariable("studentId") int studentId,
                                 @ModelAttribute("student") Student student, Model model) {
+        if (student == null) {
+            LOG.error("Student not found in database");
+            throw new StudentIsNullException("Student error", "Student not found");
+        }
         student.setId(studentId);
         studentService.saveStudent(student, studentGroupId);
         model.addAttribute("student", student);

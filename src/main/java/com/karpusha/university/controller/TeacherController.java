@@ -2,8 +2,12 @@ package com.karpusha.university.controller;
 
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Teacher;
+import com.karpusha.university.exception.FacultyIsNullException;
+import com.karpusha.university.exception.TeacherIsNullException;
 import com.karpusha.university.service.DepartmentService;
 import com.karpusha.university.service.TeacherService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,8 @@ import java.util.List;
 
 @Controller
 public class TeacherController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TeacherController.class);
 
     @Autowired
     private TeacherService teacherService;
@@ -40,6 +46,10 @@ public class TeacherController {
     public String saveTeacher(@ModelAttribute("teacher") Teacher teacher,
                               @PathVariable("departmentId")
                                       int departmentId, Model model) {
+        if (teacher == null) {
+            LOG.error("Teacher is not found");
+            throw new TeacherIsNullException("Teacher error", "Teacher is not found");
+        }
         teacherService.saveTeacher(teacher, departmentId);
         return "redirect:/editDepartment/" + departmentId;
     }
@@ -59,6 +69,10 @@ public class TeacherController {
     public String updateTeacher(@PathVariable("departmentId") int departmentId,
                                 @PathVariable("teacherId") int teacherId,
                                 @ModelAttribute("teacher") Teacher teacher, Model model) {
+        if (teacher == null) {
+            LOG.error("Teacher is not found");
+            throw new TeacherIsNullException("Teacher error", "Teacher is not found");
+        }
         teacher.setId(teacherId);
         teacherService.saveTeacher(teacher, departmentId);
         model.addAttribute("teacher", teacher);

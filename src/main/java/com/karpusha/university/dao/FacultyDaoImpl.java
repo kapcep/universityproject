@@ -33,7 +33,9 @@ public class FacultyDaoImpl implements FacultyDao {
     public Faculty getFaculty(int id) {
         Session session = entityManager.unwrap(Session.class);
         Faculty faculty = session.get(Faculty.class, id);
-        faculty.getStudentGroups();
+        if (faculty != null) {
+            faculty.getStudentGroups();
+        }
         return faculty;
     }
 

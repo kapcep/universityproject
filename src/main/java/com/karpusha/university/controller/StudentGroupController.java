@@ -3,8 +3,12 @@ package com.karpusha.university.controller;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
+import com.karpusha.university.exception.FacultyIsNullException;
+import com.karpusha.university.exception.StudentIsNullException;
 import com.karpusha.university.service.FacultyService;
 import com.karpusha.university.service.StudentGroupService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +22,7 @@ import java.util.List;
 @Controller
 public class StudentGroupController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(StudentGroupController.class);
     @Autowired
     StudentGroupService studentGroupService;
     @Autowired
@@ -37,6 +42,10 @@ public class StudentGroupController {
                                               int facultyId, Model model) {
         StudentGroup studentGroup = new StudentGroup();
         Faculty faculty = facultyService.getFaculty(facultyId);
+        if (faculty == null) {
+            LOG.error("Faculty is not found in database");
+            throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");
+        }
         model.addAttribute("studentGroup", studentGroup);
         model.addAttribute("faculty", faculty);
         return "add-student-group";
@@ -46,6 +55,10 @@ public class StudentGroupController {
     public String saveStudentGroup(@ModelAttribute("studentGroup") StudentGroup studentGroup,
                                    @PathVariable("facultyId")
                                            int facultyId, Model model) {
+        if (studentGroup == null) {
+            LOG.error("StudentGroup is not found");
+            throw new StudentIsNullException("StudentGroup error", "StudentGroup is not found");
+        }
         studentGroupService.saveStudentGroup(facultyId, studentGroup);
         return "redirect:/editFaculty/" + facultyId;
     }
@@ -55,6 +68,10 @@ public class StudentGroupController {
     public String showStudentGroupUpdateForm(@PathVariable("studentGroupId")
                                                      int studentGroupId, Model model) {
         StudentGroup studentGroup = studentGroupService.getStudentGroup(studentGroupId);
+        if (studentGroup == null) {
+            LOG.error("StudentGroup is not found");
+            throw new StudentIsNullException("StudentGroup error", "StudentGroup is not found");
+        }
         String studentGroupName = studentGroup.getGroupName();
         model.addAttribute("studentGroupId", studentGroupId);
         model.addAttribute("studentGroupName", studentGroupName);

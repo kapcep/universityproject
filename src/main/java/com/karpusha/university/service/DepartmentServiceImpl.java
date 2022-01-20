@@ -1,9 +1,13 @@
 package com.karpusha.university.service;
 
+import com.karpusha.university.controller.DepartmentController;
 import com.karpusha.university.dao.DepartmentDao;
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Teacher;
+import com.karpusha.university.exception.FacultyIsNullException;
 import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +19,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     DepartmentDao departmentDao;
+
+    private static final Logger LOG = LoggerFactory.getLogger(DepartmentService.class);
 
     @Override
     public List<Department> getAllDepartment() {
@@ -30,7 +36,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department getDepartment(int departmentId) {
         Department department = departmentDao.getDepartment(departmentId);
-        Hibernate.initialize(department.getTeachers());
+        if (department != null) {
+            Hibernate.initialize(department.getTeachers());
+        }
         return department;
     }
 
@@ -40,7 +48,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = getDepartment(departmentId);
         int facultyId = department.getFaculty().getId();
         departmentDao.deleteDepartment(departmentId);
-        return  facultyId;
+        return facultyId;
     }
 
     @Transactional
@@ -52,6 +60,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Teacher> getTeachersOfDepartment(int departmentId) {
         Department department = getDepartment(departmentId);
+        if (department == null) {
+            LOG.error("Department not found in database");
+            throw new FacultyIsNullException("Department error", "Department is not found in database");
+        }
         return department.getTeachers();
     }
 }
