@@ -5,8 +5,6 @@ import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.exception.FacultyIsNullException;
 import com.karpusha.university.service.FacultyService;
-import com.karpusha.university.service.FacultyServiceImpl;
-import com.karpusha.university.service.FacultyServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +24,11 @@ public class FacultyController {
     private static final Logger LOG = LoggerFactory.getLogger(FacultyController.class);
 
     @Autowired
-    private FacultyServiceImpl facultyService;
-
-    @Autowired
-    private FacultyServiceRepositoryImpl facultyServiceRepository;
+    private FacultyService facultyService;
 
     @GetMapping("/")
     public String showAllFaculties(Model model) {
-        List<Faculty> allFaculties = facultyServiceRepository.getAllFaculties();
+        List<Faculty> allFaculties = facultyService.getAllFaculties();
         model.addAttribute("allFaculties", allFaculties);
         return "index";
     }
