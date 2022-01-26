@@ -43,20 +43,19 @@ public class FacultyController {
     public String addNewFaculty(Model model) {
         Faculty faculty = new Faculty();
         model.addAttribute("faculty", faculty);
-
         return "add-faculty";
     }
 
     @PostMapping("/saveFaculty")
     public String saveFaculty(@ModelAttribute("faculty") Faculty faculty) {
-        facultyService.saveFaculty(faculty);
+        facultyServiceRepository.saveFaculty(faculty);
         return "redirect:/";
     }
 
     @GetMapping("/editFaculty/{id}")
     public String showFacultyUpdateForm(@PathVariable("id")
                                                 int id, Model model) {
-        Faculty faculty = facultyService.getFaculty(id);
+        Faculty faculty = facultyServiceRepository.getFaculty(id);
         if (faculty == null) {
             LOG.error("Faculty not found in database");
             throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");
@@ -68,20 +67,20 @@ public class FacultyController {
     @PostMapping("/updateFaculty/{id}")
     public String updateFaculty(@PathVariable("id") int id, @ModelAttribute("faculty") Faculty faculty, Model model) {
         faculty.setId(id);
-        facultyService.saveFaculty(faculty);
+        facultyServiceRepository.saveFaculty(faculty);
         model.addAttribute("faculty", faculty);
         return "redirect:/editFaculty/" + id;
     }
 
     @GetMapping("/deleteFaculty/{id}")
     public String deleteFaculty(@PathVariable("id") int id, Model model) {
-        facultyService.deleteFaculty(id);
+        facultyServiceRepository.deleteFaculty(id);
         return "redirect:/";
     }
 
     @GetMapping("/getStudentGroupsInFaculty/{id}")
     public String getStudentGroupsInFaculty(@PathVariable("id") int id, Model model) {
-        Faculty faculty = facultyService.getFaculty(id);
+        Faculty faculty = facultyServiceRepository.getFaculty(id);
         List<StudentGroup> studentGroups = faculty.getStudentGroups();
         model.addAttribute("allStudentGroups", studentGroups);
 
