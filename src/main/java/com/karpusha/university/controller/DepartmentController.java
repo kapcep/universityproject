@@ -6,7 +6,9 @@ import com.karpusha.university.entity.Teacher;
 import com.karpusha.university.exception.DepartmentIsNullException;
 import com.karpusha.university.exception.FacultyIsNullException;
 import com.karpusha.university.service.DepartmentService;
+import com.karpusha.university.service.DepartmentServiceRepositoryImpl;
 import com.karpusha.university.service.FacultyService;
+import com.karpusha.university.service.FacultyServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,9 @@ import java.util.List;
 public class DepartmentController {
     private static final Logger LOG = LoggerFactory.getLogger(DepartmentController.class);
     @Autowired
-    private DepartmentService departmentService;
+    private DepartmentServiceRepositoryImpl departmentService;
     @Autowired
-    private FacultyService facultyService;
+    private FacultyServiceRepositoryImpl facultyService;
 
     @GetMapping("/getAllDepartments")
     public String showAllDepartments(Model model) {

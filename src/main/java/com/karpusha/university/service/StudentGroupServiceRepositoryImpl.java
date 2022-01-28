@@ -14,7 +14,7 @@ import java.util.Optional;
 public class StudentGroupServiceRepositoryImpl implements StudentGroupService {
 
     @Autowired
-    FacultyServiceRepositoryImpl facultyServiceRepositoryImpl;
+    private FacultyServiceRepositoryImpl facultyServiceRepositoryImpl;
     @Autowired
     private StudentGroupRepository studentGroupRepository;
 
