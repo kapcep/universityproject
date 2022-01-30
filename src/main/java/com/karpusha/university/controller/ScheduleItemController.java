@@ -21,19 +21,19 @@ import java.util.stream.Collectors;
 public class ScheduleItemController {
 
     @Autowired
-    StudentGroupService studentGroupService;
+    StudentGroupServiceRepositoryImpl studentGroupService;
 
     @Autowired
-    ClassroomService classroomService;
+    ClassroomServiceRepositoryImpl classroomService;
 
     @Autowired
-    TeacherService teacherService;
+    TeacherServiceRepositoryImpl teacherService;
 
     @Autowired
-    ScheduleItemService scheduleItemService;
+    ScheduleItemServiceRepositoryImpl scheduleItemService;
 
     @Autowired
-    StudentService studentService;
+    StudentServiceRepositoryImpl studentService;
 
     @GetMapping("/getAllScheduleItems")
     public String showAllScheduleItems(Model model) {

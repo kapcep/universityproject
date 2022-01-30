@@ -4,8 +4,6 @@ import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.exception.FacultyIsNullException;
-import com.karpusha.university.service.FacultyService;
-import com.karpusha.university.service.FacultyServiceImpl;
 import com.karpusha.university.service.FacultyServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +22,6 @@ import java.util.List;
 public class FacultyController {
 
     private static final Logger LOG = LoggerFactory.getLogger(FacultyController.class);
-
-    @Autowired
-    private FacultyServiceImpl facultyService;
 
     @Autowired
     private FacultyServiceRepositoryImpl facultyServiceRepository;
@@ -89,7 +84,7 @@ public class FacultyController {
 
     @GetMapping("/getDepartmentsInFaculty/{id}")
     public String getDepartmentsInFaculty(@PathVariable("id") int id, Model model) {
-        Faculty faculty = facultyService.getFaculty(id);
+        Faculty faculty = facultyServiceRepository.getFaculty(id);
         if (faculty == null) {
             LOG.error("Faculty not found in database");
             throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");

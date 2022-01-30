@@ -5,7 +5,9 @@ import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.exception.FacultyIsNullException;
 import com.karpusha.university.exception.StudentIsNullException;
 import com.karpusha.university.service.StudentGroupService;
+import com.karpusha.university.service.StudentGroupServiceRepositoryImpl;
 import com.karpusha.university.service.StudentService;
+import com.karpusha.university.service.StudentServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,10 @@ public class StudentController {
     private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    private StudentService studentService;
+    private StudentServiceRepositoryImpl studentService;
 
     @Autowired
-    private StudentGroupService studentGroupService;
+    private StudentGroupServiceRepositoryImpl studentGroupService;
 
     @GetMapping("/getAllStudents")
     public String showAllStudents(Model model) {

@@ -2,10 +2,9 @@ package com.karpusha.university.controller;
 
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Teacher;
-import com.karpusha.university.exception.FacultyIsNullException;
 import com.karpusha.university.exception.TeacherIsNullException;
-import com.karpusha.university.service.DepartmentService;
-import com.karpusha.university.service.TeacherService;
+import com.karpusha.university.service.DepartmentServiceRepositoryImpl;
+import com.karpusha.university.service.TeacherServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,9 @@ public class TeacherController {
     private static final Logger LOG = LoggerFactory.getLogger(TeacherController.class);
 
     @Autowired
-    private TeacherService teacherService;
+    private TeacherServiceRepositoryImpl teacherService;
     @Autowired
-    private DepartmentService departmentService;
+    private DepartmentServiceRepositoryImpl departmentService;
 
     @RequestMapping("/getAllTeachers")
     public String showAllTeachers(Model model) {
