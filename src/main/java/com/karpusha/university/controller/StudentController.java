@@ -2,19 +2,18 @@ package com.karpusha.university.controller;
 
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
-import com.karpusha.university.exception.FacultyIsNullException;
 import com.karpusha.university.exception.StudentIsNullException;
-import com.karpusha.university.service.StudentGroupService;
 import com.karpusha.university.service.StudentGroupServiceRepositoryImpl;
-import com.karpusha.university.service.StudentService;
 import com.karpusha.university.service.StudentServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -47,15 +46,24 @@ public class StudentController {
     }
 
     @RequestMapping("/saveStudent/{studentGroupId}")
-    public String saveStudent(@ModelAttribute("student") Student student,
+    public String saveStudent(@Valid @ModelAttribute("student") Student student,
+                              BindingResult bindingResult,
                               @PathVariable("studentGroupId")
                                       int studentGroupId, Model model) {
-        if (student == null) {
-            LOG.error("Student is not found");
-            throw new StudentIsNullException("Student error", "Student not found");
+        if (bindingResult.hasErrors()) {
+            LOG.info("saveStudent: Binding result has errors");
+            StudentGroup studentGroup = studentGroupService.getStudentGroup(studentGroupId);
+            model.addAttribute("studentGroup", studentGroup);
+            model.addAttribute("student", student);
+            return "add-student";
+        } else {
+            if (student == null) {
+                LOG.error("Student is not found");
+                throw new StudentIsNullException("Student error", "Student not found");
+            }
+            studentService.saveStudent(student, studentGroupId);
+            return "redirect:/editStudentGroup/" + studentGroupId;
         }
-        studentService.saveStudent(student, studentGroupId);
-        return "redirect:/editStudentGroup/" + studentGroupId;
     }
 
     @GetMapping("/editStudent/{studentId}")

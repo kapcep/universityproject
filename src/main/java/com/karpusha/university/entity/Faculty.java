@@ -1,6 +1,8 @@
 package com.karpusha.university.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +17,8 @@ public class Faculty {
     private int id;
 
     @Column(name = "faculty_name")
+    @Size(min = 2, message = "Name must be minimum 2 symbols")
+    @NotBlank(message = "Name can not be empty")
     private String name;
 
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)

@@ -9,8 +9,13 @@
 <form action="#" th:action="@{/saveStudent/{studentGroupId}(studentGroupId=${studentGroup.id})}" th:object="${student}"
       method="post">
     <p>Student Name: <input type="text" th:field="*{studentName}"/></p>
+    <label th:if="${#fields.hasErrors('studentName')}" cssErrorClass="form-field-error"
+           th:errors="*{studentName}"></label>
     <p>Student SurName: <input type="text" th:field="*{studentSurName}"/></p>
+    <label th:if="${#fields.hasErrors('studentSurName')}" cssErrorClass="form-field-error"
+           th:errors="*{studentSurName}"></label>
     <p>Age: <input type="number" th:field="*{age}"/></p>
+    <label th:if="${#fields.hasErrors('age')}" cssErrorClass="form-field-error" th:errors="*{age}"></label>
     <p><input type="submit" value="Add"/> <input type="reset" value="Reset"/></p>
 </form>
 </body>

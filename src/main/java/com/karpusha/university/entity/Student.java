@@ -2,6 +2,9 @@ package com.karpusha.university.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -18,12 +21,17 @@ public class Student {
     private int id;
 
     @Column(name = "student_name")
+    @Size(min = 2, message = "Student name must have at least 2 symbols")
+    @NotBlank(message = "Student name can not be empty")
     private String studentName;
 
     @Column(name = "student_surname")
+    @Size(min = 2, message = "Student surName must have at least 2 symbols")
+    @NotBlank(message = "Student surName can not be empty")
     private String studentSurName;
 
     @Column(name = "age")
+    @Min(value = 16, message = "Student must have at least 16 years old")
     private int age;
 
     public Student() {
