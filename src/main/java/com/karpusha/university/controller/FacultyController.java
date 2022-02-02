@@ -47,8 +47,7 @@ public class FacultyController {
     public String saveFaculty(@Valid @ModelAttribute("faculty") Faculty faculty, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add-faculty";
-        }
-        else {
+        } else {
             facultyServiceRepository.saveFaculty(faculty);
             return "redirect:/";
         }
@@ -67,11 +66,16 @@ public class FacultyController {
     }
 
     @PostMapping("/updateFaculty/{id}")
-    public String updateFaculty(@PathVariable("id") int id, @ModelAttribute("faculty") Faculty faculty, Model model) {
-        faculty.setId(id);
-        facultyServiceRepository.saveFaculty(faculty);
-        model.addAttribute("faculty", faculty);
-        return "redirect:/editFaculty/" + id;
+    public String updateFaculty(@PathVariable("id") int id, @Valid @ModelAttribute("faculty") Faculty faculty,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "update-faculty";
+        } else {
+            faculty.setId(id);
+            facultyServiceRepository.saveFaculty(faculty);
+            model.addAttribute("faculty", faculty);
+            return "redirect:/editFaculty/" + id;
+        }
     }
 
     @GetMapping("/deleteFaculty/{id}")

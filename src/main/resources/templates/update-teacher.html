@@ -10,9 +10,15 @@
       th:action="@{/updateTeacher/{departmentId}/{teacherId}(teacherId=${teacherId},departmentId=${departmentId})}"
       th:object="${teacher}"
       method="post">
-    <p><input type="text" th:field="*{teacherName}"/></p>
-    <p><input type="text" th:field="*{teacherSurName}"/></p>
-    <p><input type="number" th:field="*{age}"/></p>
+    <p>Teacher Name:<input type="text" th:field="*{teacherName}"/></p>
+    <label th:if="${#fields.hasErrors('teacherName')}" cssErrorClass="form-field-error"
+           th:errors="*{teacherName}"></label>
+    <p>Teacher SurName:<input type="text" th:field="*{teacherSurName}"/></p>
+    <label th:if="${#fields.hasErrors('teacherSurName')}" cssErrorClass="form-field-error"
+           th:errors="*{teacherSurName}"></label>
+    <p>Teacher Age:<input type="number" th:field="*{age}"/></p>
+    <label th:if="${#fields.hasErrors('age')}" cssErrorClass="form-field-error"
+           th:errors="*{age}"></label>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
 </form>
 <br>

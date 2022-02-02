@@ -9,8 +9,14 @@
 <form action="#" th:action="@{/saveTeacher/{departmentId}(departmentId=${department.id})}" th:object="${teacher}"
       method="post">
     <p>Teacher Name: <input type="text" th:field="*{teacherName}"/></p>
+    <label th:if="${#fields.hasErrors('teacherName')}" cssErrorClass="form-field-error"
+           th:errors="*{teacherName}"></label>
     <p>Teacher SurName: <input type="text" th:field="*{teacherSurName}"/></p>
+    <label th:if="${#fields.hasErrors('teacherSurName')}" cssErrorClass="form-field-error"
+           th:errors="*{teacherSurName}"></label>
     <p>Age: <input type="number" th:field="*{age}"/></p>
+    <label th:if="${#fields.hasErrors('age')}" cssErrorClass="form-field-error"
+           th:errors="*{age}"></label>
     <p><input type="submit" value="Add"/> <input type="reset" value="Reset"/></p>
 </form>
 </body>

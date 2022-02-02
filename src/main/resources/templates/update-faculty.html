@@ -8,6 +8,7 @@
 <h2>Update faculty</h2>
 <form action="#" th:action="@{/updateFaculty/{id}(id=${faculty.id})}" th:object="${faculty}" method="post">
     <p>Faculty Name: <input type="text" th:field="*{name}"/></p>
+    <label th:if="${#fields.hasErrors('name')}" cssErrorClass="form-field-error" th:errors="*{name}"></label>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
 </form>
 <br>

@@ -10,8 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -24,7 +29,7 @@ public class TeacherController {
     @Autowired
     private DepartmentServiceRepositoryImpl departmentService;
 
-    @RequestMapping("/getAllTeachers")
+    @GetMapping("/getAllTeachers")
     public String showAllTeachers(Model model) {
         List<Teacher> allTeachers = teacherService.getAllTeachers();
         model.addAttribute("allTeachers", allTeachers);
@@ -42,15 +47,23 @@ public class TeacherController {
     }
 
     @PostMapping("/saveTeacher/{departmentId}")
-    public String saveTeacher(@ModelAttribute("teacher") Teacher teacher,
+    public String saveTeacher(@Valid @ModelAttribute("teacher") Teacher teacher,
+                              BindingResult bindingResult,
                               @PathVariable("departmentId")
                                       int departmentId, Model model) {
-        if (teacher == null) {
-            LOG.error("Teacher is not found");
-            throw new TeacherIsNullException("Teacher error", "Teacher is not found");
+        if (bindingResult.hasErrors()) {
+            Department department = departmentService.getDepartment(departmentId);
+            model.addAttribute("department", department);
+            model.addAttribute("teacher", teacher);
+            return "add-teacher";
+        } else {
+            if (teacher == null) {
+                LOG.error("Teacher is not found");
+                throw new TeacherIsNullException("Teacher error", "Teacher is not found");
+            }
+            teacherService.saveTeacher(teacher, departmentId);
+            return "redirect:/editDepartment/" + departmentId;
         }
-        teacherService.saveTeacher(teacher, departmentId);
-        return "redirect:/editDepartment/" + departmentId;
     }
 
     @GetMapping("/editTeacher/{teacherId}")
@@ -67,15 +80,22 @@ public class TeacherController {
     @PostMapping("/updateTeacher/{departmentId}/{teacherId}")
     public String updateTeacher(@PathVariable("departmentId") int departmentId,
                                 @PathVariable("teacherId") int teacherId,
-                                @ModelAttribute("teacher") Teacher teacher, Model model) {
-        if (teacher == null) {
-            LOG.error("Teacher is not found");
-            throw new TeacherIsNullException("Teacher error", "Teacher is not found");
+                                @Valid @ModelAttribute("teacher") Teacher teacher,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("teacher", teacher);
+            model.addAttribute("departmentId", departmentId);
+            return "update-teacher";
+        } else {
+            if (teacher == null) {
+                LOG.error("Teacher is not found");
+                throw new TeacherIsNullException("Teacher error", "Teacher is not found");
+            }
+            teacher.setId(teacherId);
+            teacherService.saveTeacher(teacher, departmentId);
+            model.addAttribute("teacher", teacher);
+            return "redirect:/editTeacher/" + teacherId;
         }
-        teacher.setId(teacherId);
-        teacherService.saveTeacher(teacher, departmentId);
-        model.addAttribute("teacher", teacher);
-        return "redirect:/editTeacher/" + teacherId;
     }
 
     @GetMapping("/deleteTeacher/{teacherId}")

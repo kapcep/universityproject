@@ -1,6 +1,9 @@
 package com.karpusha.university.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -13,12 +16,17 @@ public class Teacher {
     private int id;
 
     @Column(name = "teacher_name")
+    @Size(min = 2, message = "Teacher name must have at least 2 symbols")
+    @NotBlank(message = "Teacher name can not be empty")
     private String teacherName;
 
     @Column(name = "teacher_surname")
+    @Size(min = 2, message = "Teacher surName must have at least 2 symbols")
+    @NotBlank(message = "Teacher surName can not be empty")
     private String teacherSurName;
 
     @Column(name = "age")
+    @Min(value = 22, message = "Teacher must have at least 22 years old")
     private int age;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

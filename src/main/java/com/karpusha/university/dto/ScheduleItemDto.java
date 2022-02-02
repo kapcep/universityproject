@@ -1,11 +1,27 @@
 package com.karpusha.university.dto;
 
+import com.karpusha.university.validation.CompareBeginAndEndLessonDate;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class ScheduleItemDto {
+
+    @NotBlank(message = "Please choose begin time of lesson")
     private String beginDate;
+
+    @NotBlank(message = "Please choose end time of lesson")
+    @CompareBeginAndEndLessonDate
     private String endDate;
+
+    @Size(min = 1, message = "Lesson name must have at least 1 symbols")
+    @NotBlank(message = "Lesson name can not be empty")
     private String lessonName;
+
     private Integer classroomId;
+
     private Integer studentGroupId;
+
     private Integer teacherId;
 
     public ScheduleItemDto() {
