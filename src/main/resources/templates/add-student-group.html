@@ -9,6 +9,7 @@
 <form action="#" th:action="@{/saveStudentGroup/{facultyId}(facultyId=${faculty.id})}" th:object="${studentGroup}"
       method="post">
     <p>Student Group Name: <input type="text" th:field="*{groupName}"/></p>
+    <label th:if="${#fields.hasErrors('groupName')}" cssErrorClass="form-field-error" th:errors="*{groupName}"></label>
     <p><input type="submit" value="Add"/> <input type="reset" value="Reset"/></p>
 </form>
 </body>

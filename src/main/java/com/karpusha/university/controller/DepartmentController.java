@@ -5,20 +5,20 @@ import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.Teacher;
 import com.karpusha.university.exception.DepartmentIsNullException;
 import com.karpusha.university.exception.FacultyIsNullException;
-import com.karpusha.university.service.DepartmentService;
 import com.karpusha.university.service.DepartmentServiceRepositoryImpl;
-import com.karpusha.university.service.FacultyService;
 import com.karpusha.university.service.FacultyServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -51,15 +51,22 @@ public class DepartmentController {
     }
 
     @PostMapping("/saveDepartment/{facultyId}")
-    public String saveDepartment(@ModelAttribute("department") Department department,
+    public String saveDepartment(@Valid @ModelAttribute("department") Department department,
+                                 BindingResult bindingResult,
                                  @PathVariable("facultyId")
                                          int facultyId, Model model) {
-        if (department == null) {
-            LOG.error("Department i not found");
-            throw new DepartmentIsNullException("Department error", "Department is not found");
+        if (bindingResult.hasErrors()) {
+            Faculty faculty = facultyService.getFaculty(facultyId);
+            model.addAttribute("faculty", faculty);
+            return "add-department";
+        } else {
+            if (department == null) {
+                LOG.error("Department i not found");
+                throw new DepartmentIsNullException("Department error", "Department is not found");
+            }
+            departmentService.saveDepartment(facultyId, department);
+            return "redirect:/editFaculty/" + facultyId;
         }
-        departmentService.saveDepartment(facultyId, department);
-        return "redirect:/editFaculty/" + facultyId;
     }
 
     @GetMapping("/editDepartment/{departmentId}")
@@ -70,19 +77,28 @@ public class DepartmentController {
             LOG.error("Department not found in database");
             throw new DepartmentIsNullException("Department error", "Department is not found");
         }
-        String departmentName = department.getName();
         model.addAttribute("departmentId", departmentId);
-        model.addAttribute("departmentName", departmentName);
+        model.addAttribute("department", department);
 
         return "update-department";
     }
 
     @PostMapping("/updateDepartment/{departmentId}")
-    public String updateDepartment(@PathVariable("departmentId") int departmentId,
-                                   @ModelAttribute("departmentName") String departmentName, Model model) {
-        int facultyId = departmentService.getDepartment(departmentId).getFaculty().getId();
-        departmentService.updateDepartmentName(departmentId, departmentName);
-        return "redirect:/getDepartmentsInFaculty/" + facultyId;
+    public String updateDepartment(@Valid @ModelAttribute("department") Department department,
+                                   BindingResult bindingResult, @PathVariable("departmentId") int departmentId,
+                                   Model model) {
+        LOG.info("updateDepartment method: beginning");
+        if (bindingResult.hasErrors()) {
+            LOG.info("updateDepartment method: bindingResult has errors");
+            model.addAttribute("departmentId", departmentId);
+            model.addAttribute("department", department);
+            return "update-department";
+        } else {
+            LOG.info("updateDepartment method: bindingResult has not errors");
+            int facultyId = departmentService.getDepartment(departmentId).getFaculty().getId();
+            departmentService.updateDepartmentName(departmentId, department.getName());
+            return "redirect:/getDepartmentsInFaculty/" + facultyId;
+        }
     }
 
     @GetMapping("/deleteDepartment/{departmentId}")

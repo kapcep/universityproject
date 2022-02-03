@@ -6,9 +6,10 @@
 </head>
 <body align="center">
 <h2>Update Department</h2>
-<form action="#" th:action="@{/updateDepartment/{departmentId}(departmentId=${departmentId})}" method="post">
-    <input type="text" th:value="${departmentName}" name="departmentName"/>
-    <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
+<form action="#" th:action="@{/updateDepartment/{departmentId}(departmentId=${departmentId})}" th:object="${department}" method="post">
+Department Name: <input type="text" th:field="*{name}"/></p>
+<label th:if="${#fields.hasErrors('name')}" cssErrorClass="form-field-error" th:errors="*{name}"></label>
+<p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
 </form>
 <br>
 <a th:href="@{/addNewTeacher/{departmentId}(departmentId=${departmentId})}">Add new Teacher</a>

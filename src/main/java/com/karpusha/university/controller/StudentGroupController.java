@@ -12,11 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -52,15 +54,24 @@ public class StudentGroupController {
     }
 
     @PostMapping("/saveStudentGroup/{facultyId}")
-    public String saveStudentGroup(@ModelAttribute("studentGroup") StudentGroup studentGroup,
+    public String saveStudentGroup(@Valid @ModelAttribute("studentGroup") StudentGroup studentGroup,
+                                   BindingResult bindingResult,
                                    @PathVariable("facultyId")
                                            int facultyId, Model model) {
-        if (studentGroup == null) {
-            LOG.error("StudentGroup is not found");
-            throw new StudentIsNullException("StudentGroup error", "StudentGroup is not found");
+        if (bindingResult.hasErrors()) {
+            Faculty faculty = facultyService.getFaculty(facultyId);
+            model.addAttribute("studentGroup", studentGroup);
+            model.addAttribute("faculty", faculty);
+            return "add-student-group";
+        } else {
+
+            if (studentGroup == null) {
+                LOG.error("StudentGroup is not found");
+                throw new StudentIsNullException("StudentGroup error", "StudentGroup is not found");
+            }
+            studentGroupService.saveStudentGroup(facultyId, studentGroup);
+            return "redirect:/editFaculty/" + facultyId;
         }
-        studentGroupService.saveStudentGroup(facultyId, studentGroup);
-        return "redirect:/editFaculty/" + facultyId;
     }
 
     // edit student group
@@ -72,19 +83,25 @@ public class StudentGroupController {
             LOG.error("StudentGroup is not found");
             throw new StudentIsNullException("StudentGroup error", "StudentGroup is not found");
         }
-        String studentGroupName = studentGroup.getGroupName();
         model.addAttribute("studentGroupId", studentGroupId);
-        model.addAttribute("studentGroupName", studentGroupName);
+        model.addAttribute("studentGroup", studentGroup);
 
         return "update-student-group";
     }
 
     @PostMapping("/updateStudentGroup/{studentGroupId}")
     public String updateStudentGroup(@PathVariable("studentGroupId") int studentGroupId,
-                                     @ModelAttribute("studentGroupName") String studentGroupName, Model model) {
-        int facultyId = studentGroupService.getStudentGroup(studentGroupId).getFaculty().getId();
-        studentGroupService.updateStudentGroupName(studentGroupId, studentGroupName);
-        return "redirect:/getStudentGroupsInFaculty/" + facultyId;
+                                     @Valid @ModelAttribute("studentGroup") StudentGroup studentGroup,
+                                     BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("studentGroupId", studentGroupId);
+            model.addAttribute("studentGroup", studentGroup);
+            return "update-student-group";
+        } else {
+            int facultyId = studentGroupService.getStudentGroup(studentGroupId).getFaculty().getId();
+            studentGroupService.updateStudentGroupName(studentGroupId, studentGroup.getGroupName());
+            return "redirect:/getStudentGroupsInFaculty/" + facultyId;
+        }
     }
 
     @GetMapping("/deleteStudentGroup/{studentGroupId}")

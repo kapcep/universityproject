@@ -1,6 +1,8 @@
 package com.karpusha.university.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,8 @@ public class Department {
     private int id;
 
     @Column(name = "department_name")
+    @Size(min = 2, message = "Department Name must be minimum 2 symbols")
+    @NotBlank(message = "Department Name can not be empty")
     private String name;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

@@ -6,8 +6,9 @@
 </head>
 <body align="center">
 <h2>Update student group</h2>
-<form action="#" th:action="@{/updateStudentGroup/{studentGroupId}(studentGroupId=${studentGroupId})}" method="post">
-    <input type="text" th:value="${studentGroupName}" name="studentGroupName"/>
+<form action="#" th:action="@{/updateStudentGroup/{studentGroupId}(studentGroupId=${studentGroupId})}" th:object="${studentGroup}" method="post">
+    <p> Student Group Name: <input type="text" th:field="*{groupName}"/></p>
+    <label th:if="${#fields.hasErrors('groupName')}" cssErrorClass="form-field-error" th:errors="*{groupName}"></label>
     <p><input type="submit" value="Update"/> <input type="reset" value="Reset"/></p>
 </form>
 <br>

@@ -1,6 +1,8 @@
 package com.karpusha.university.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,8 @@ public class StudentGroup {
     private int id;
 
     @Column(name = "group_name")
+    @Size(min = 2, message = "StudentGroup Name must be minimum 2 symbols")
+    @NotBlank(message = "StudentGroup Name can not be empty")
     private String groupName;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
