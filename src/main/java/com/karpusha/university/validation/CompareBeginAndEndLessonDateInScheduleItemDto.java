@@ -7,10 +7,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = CompareBeginAndEndLessonDateValidator.class)
-public @interface CompareBeginAndEndLessonDate {
+public @interface CompareBeginAndEndLessonDateInScheduleItemDto {
     String message() default "Beginning date can not be less than end date";
 
     Class<?>[] groups() default {};
