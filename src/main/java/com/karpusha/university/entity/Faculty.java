@@ -21,10 +21,10 @@ public class Faculty {
     @NotBlank(message = "Faculty Name can not be empty")
     private String name;
 
-    @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private List<StudentGroup> studentGroups;
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private List<Department> departments;
 
 

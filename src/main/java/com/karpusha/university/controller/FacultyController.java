@@ -4,7 +4,7 @@ import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.exception.FacultyIsNullException;
-import com.karpusha.university.service.FacultyServiceRepositoryImpl;
+import com.karpusha.university.service.FacultyServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ public class FacultyController {
     private static final Logger LOG = LoggerFactory.getLogger(FacultyController.class);
 
     @Autowired
-    private FacultyServiceRepositoryImpl facultyServiceRepository;
+    private FacultyServiceImpl facultyService;
 
 
     @GetMapping("/")
     public String showAllFaculties(Model model) {
-        List<Faculty> allFaculties = facultyServiceRepository.getAllFaculties();
+        List<Faculty> allFaculties = facultyService.getAllFaculties();
         model.addAttribute("allFaculties", allFaculties);
         return "index";
     }
@@ -48,7 +48,7 @@ public class FacultyController {
         if (bindingResult.hasErrors()) {
             return "add-faculty";
         } else {
-            facultyServiceRepository.saveFaculty(faculty);
+            facultyService.saveFaculty(faculty);
             return "redirect:/";
         }
     }
@@ -56,7 +56,7 @@ public class FacultyController {
     @GetMapping("/editFaculty/{id}")
     public String showFacultyUpdateForm(@PathVariable("id")
                                                 int id, Model model) {
-        Faculty faculty = facultyServiceRepository.getFaculty(id);
+        Faculty faculty = facultyService.getFaculty(id);
         if (faculty == null) {
             LOG.error("Faculty not found in database");
             throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");
@@ -72,7 +72,7 @@ public class FacultyController {
             return "update-faculty";
         } else {
             faculty.setId(id);
-            facultyServiceRepository.saveFaculty(faculty);
+            facultyService.saveFaculty(faculty);
             model.addAttribute("faculty", faculty);
             return "redirect:/editFaculty/" + id;
         }
@@ -80,13 +80,13 @@ public class FacultyController {
 
     @GetMapping("/deleteFaculty/{id}")
     public String deleteFaculty(@PathVariable("id") int id, Model model) {
-        facultyServiceRepository.deleteFaculty(id);
+        facultyService.deleteFaculty(id);
         return "redirect:/";
     }
 
     @GetMapping("/getStudentGroupsInFaculty/{id}")
     public String getStudentGroupsInFaculty(@PathVariable("id") int id, Model model) {
-        Faculty faculty = facultyServiceRepository.getFaculty(id);
+        Faculty faculty = facultyService.getFaculty(id);
         List<StudentGroup> studentGroups = faculty.getStudentGroups();
         model.addAttribute("allStudentGroups", studentGroups);
 
@@ -95,7 +95,7 @@ public class FacultyController {
 
     @GetMapping("/getDepartmentsInFaculty/{id}")
     public String getDepartmentsInFaculty(@PathVariable("id") int id, Model model) {
-        Faculty faculty = facultyServiceRepository.getFaculty(id);
+        Faculty faculty = facultyService.getFaculty(id);
         if (faculty == null) {
             LOG.error("Faculty not found in database");
             throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");
