@@ -3,8 +3,8 @@ package com.karpusha.university.controller;
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.exception.StudentIsNullException;
-import com.karpusha.university.service.StudentGroupServiceRepositoryImpl;
-import com.karpusha.university.service.StudentServiceRepositoryImpl;
+import com.karpusha.university.service.StudentGroupServiceImpl;
+import com.karpusha.university.service.StudentServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ public class StudentController {
     private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    private StudentServiceRepositoryImpl studentService;
+    private StudentServiceImpl studentService;
 
     @Autowired
-    private StudentGroupServiceRepositoryImpl studentGroupService;
+    private StudentGroupServiceImpl studentGroupService;
 
     @GetMapping("/getAllStudents")
     public String showAllStudents(Model model) {

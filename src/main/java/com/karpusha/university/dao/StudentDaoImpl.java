@@ -2,8 +2,6 @@ package com.karpusha.university.dao;
 
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,32 +16,30 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Student> getAllStudents() {
-        Session session = entityManager.unwrap(Session.class);
-        List<Student> allStudents = session.createQuery("from Student", Student.class).getResultList();
-
+        List<Student> allStudents = entityManager.createQuery("from Student").getResultList();
         return allStudents;
     }
 
     @Override
     public void saveStudent(Student student, int studentGroupId) {
-        Session session = entityManager.unwrap(Session.class);
-        StudentGroup studentGroup = session.get(StudentGroup.class, studentGroupId);
-        student.setStudentGroup(studentGroup);
-        session.saveOrUpdate(student);
+        StudentGroup studentGroup = entityManager.find(StudentGroup.class, studentGroupId);
+        if (student != null) {
+            student.setStudentGroup(studentGroup);
+            entityManager.persist(student);
+        }
     }
 
     @Override
     public Student getStudent(int studentId) {
-        Session session = entityManager.unwrap(Session.class);
-        Student student = session.get(Student.class, studentId);
+        Student student = entityManager.find(Student.class, studentId);
         return student;
     }
 
     @Override
     public void deleteStudent(int studentId) {
-        Session session = entityManager.unwrap(Session.class);
-        Query<Student> query = session.createQuery("delete from  Student where id =:studentId");
-        query.setParameter("studentId", studentId);
-        query.executeUpdate();
+        Student student = getStudent(studentId);
+        if (student != null) {
+            entityManager.remove(student);
+        }
     }
 }
