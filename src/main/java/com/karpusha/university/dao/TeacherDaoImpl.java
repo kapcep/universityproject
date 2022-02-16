@@ -2,8 +2,6 @@ package com.karpusha.university.dao;
 
 import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Teacher;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,31 +16,37 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public List<Teacher> getAllTeachers() {
-        Session session = entityManager.unwrap(Session.class);
-        List<Teacher> allTeachers = session.createQuery("from Teacher", Teacher.class).getResultList();
+
+        List<Teacher> allTeachers = entityManager.createQuery("from Teacher").getResultList();
         return allTeachers;
     }
 
     @Override
     public void saveTeacher(Teacher teacher, int departmentId) {
-        Session session = entityManager.unwrap(Session.class);
-        Department department = session.get(Department.class, departmentId);
-        teacher.setDepartment(department);
-        session.saveOrUpdate(teacher);
+
+        Department department = entityManager.find(Department.class, departmentId);
+        if (teacher != null) {
+            if (teacher.getId() == 0) {
+                teacher.setDepartment(department);
+                entityManager.persist(teacher);
+            } else {
+                teacher.setDepartment(department);
+                entityManager.merge(teacher);
+            }
+        }
     }
 
     @Override
     public Teacher getTeacher(int teacherId) {
-        Session session = entityManager.unwrap(Session.class);
-        Teacher teacher = session.get(Teacher.class, teacherId);
+        Teacher teacher = entityManager.find(Teacher.class, teacherId);
         return teacher;
     }
 
     @Override
     public void deleteTeacher(int teacherId) {
-        Session session = entityManager.unwrap(Session.class);
-        Query<Teacher> query = session.createQuery("delete from  Teacher where id =:teacherId");
-        query.setParameter("teacherId", teacherId);
-        query.executeUpdate();
+        Teacher teacher = getTeacher(teacherId);
+        if (teacher != null) {
+            entityManager.remove(teacher);
+        }
     }
 }

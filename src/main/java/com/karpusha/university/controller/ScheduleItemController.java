@@ -23,16 +23,16 @@ import java.util.stream.Collectors;
 public class ScheduleItemController {
 
     @Autowired
-    StudentGroupServiceRepositoryImpl studentGroupService;
+    StudentGroupServiceImpl studentGroupService;
 
     @Autowired
-    ClassroomServiceRepositoryImpl classroomService;
+    ClassroomServiceImpl classroomService;
 
     @Autowired
-    TeacherServiceRepositoryImpl teacherService;
+    TeacherServiceImpl teacherService;
 
     @Autowired
-    ScheduleItemServiceRepositoryImpl scheduleItemService;
+    ScheduleServiceImpl scheduleItemService;
 
     @Autowired
     StudentServiceRepositoryImpl studentService;

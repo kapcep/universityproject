@@ -5,8 +5,6 @@ import com.karpusha.university.entity.Classroom;
 import com.karpusha.university.entity.ScheduleItem;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.entity.Teacher;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,44 +22,43 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
 
     @Override
     public List<ScheduleItem> getAllScheduleItems() {
-        Session session = entityManager.unwrap(Session.class);
-        List<ScheduleItem> scheduleItems = session.createQuery("from ScheduleItem", ScheduleItem.class).getResultList();
+
+        List<ScheduleItem> scheduleItems = entityManager.createQuery("from ScheduleItem").getResultList();
         return scheduleItems;
     }
 
     @Override
     public void saveScheduleItem(ScheduleItemDto scheduleItemDto) throws ParseException {
-        Session session = entityManager.unwrap(Session.class);
-        Classroom classroom = session.get(Classroom.class, scheduleItemDto.getClassroomId());
-        StudentGroup studentGroup = session.get(StudentGroup.class, scheduleItemDto.getStudentGroupId());
-        Teacher teacher = session.get(Teacher.class, scheduleItemDto.getTeacherId());
+
+        Classroom classroom = entityManager.find(Classroom.class, scheduleItemDto.getClassroomId());
+        StudentGroup studentGroup = entityManager.find(StudentGroup.class, scheduleItemDto.getStudentGroupId());
+        Teacher teacher = entityManager.find(Teacher.class, scheduleItemDto.getTeacherId());
         Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
         Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
-        session.saveOrUpdate(new ScheduleItem(beginDate, endDate, scheduleItemDto.getLessonName(), classroom, studentGroup, teacher));
+        entityManager.persist(new ScheduleItem(beginDate, endDate, scheduleItemDto.getLessonName(), classroom, studentGroup, teacher));
     }
 
     @Override
     public ScheduleItem getScheduleItem(int scheduleItemId) {
-        Session session = entityManager.unwrap(Session.class);
-        ScheduleItem scheduleItem = session.get(ScheduleItem.class, scheduleItemId);
+        ScheduleItem scheduleItem = entityManager.find(ScheduleItem.class, scheduleItemId);
         return scheduleItem;
     }
 
     @Override
     public void deleteScheduleItem(int scheduleItemId) {
-        Session session = entityManager.unwrap(Session.class);
-        Query<ScheduleItem> query = session.createQuery("delete from  ScheduleItem where id =:scheduleItemId");
-        query.setParameter("scheduleItemId", scheduleItemId);
-        query.executeUpdate();
+        ScheduleItem scheduleItem = entityManager.find(ScheduleItem.class, scheduleItemId);
+        if (scheduleItem != null) {
+            entityManager.remove(scheduleItem);
+        }
     }
 
     @Override
     public void updateScheduleItem(int scheduleItemId, ScheduleItemDto scheduleItemDto) throws ParseException {
-        Session session = entityManager.unwrap(Session.class);
-        ScheduleItem scheduleItem = session.get(ScheduleItem.class, scheduleItemId);
-        Classroom classroom = session.get(Classroom.class, scheduleItemDto.getClassroomId());
-        StudentGroup studentGroup = session.get(StudentGroup.class, scheduleItemDto.getStudentGroupId());
-        Teacher teacher = session.get(Teacher.class, scheduleItemDto.getTeacherId());
+
+        ScheduleItem scheduleItem = getScheduleItem(scheduleItemId);
+        Classroom classroom = entityManager.find(Classroom.class, scheduleItemDto.getClassroomId());
+        StudentGroup studentGroup = entityManager.find(StudentGroup.class, scheduleItemDto.getStudentGroupId());
+        Teacher teacher = entityManager.find(Teacher.class, scheduleItemDto.getTeacherId());
         Date beginDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getBeginDate());
         Date endDate = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(scheduleItemDto.getEndDate());
         scheduleItem.setBeginTime(beginDate);
@@ -70,6 +67,6 @@ public class ScheduleItemDaoImpl implements ScheduleItemDao {
         scheduleItem.setClassroom(classroom);
         scheduleItem.setStudentGroup(studentGroup);
         scheduleItem.setTeacher(teacher);
-        session.saveOrUpdate(scheduleItem);
+        entityManager.merge(scheduleItem);
     }
 }

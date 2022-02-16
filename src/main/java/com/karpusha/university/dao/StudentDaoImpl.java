@@ -24,8 +24,13 @@ public class StudentDaoImpl implements StudentDao {
     public void saveStudent(Student student, int studentGroupId) {
         StudentGroup studentGroup = entityManager.find(StudentGroup.class, studentGroupId);
         if (student != null) {
-            student.setStudentGroup(studentGroup);
-            entityManager.persist(student);
+            if (student.getId() == 0) {
+                student.setStudentGroup(studentGroup);
+                entityManager.persist(student);
+            } else {
+                student.setStudentGroup(studentGroup);
+                entityManager.merge(student);
+            }
         }
     }
 

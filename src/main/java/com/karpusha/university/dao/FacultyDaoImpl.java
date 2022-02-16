@@ -22,15 +22,18 @@ public class FacultyDaoImpl implements FacultyDao {
 
     @Override
     public void saveFaculty(Faculty faculty) {
-        entityManager.persist(faculty);
+        if (faculty != null) {
+            if (faculty.getId() == 0) {
+                entityManager.persist(faculty);
+            } else {
+                entityManager.merge(faculty);
+            }
+        }
     }
 
     @Override
     public Faculty getFaculty(int id) {
         Faculty faculty = entityManager.find(Faculty.class, id);
-        if (faculty != null) {
-            faculty.getStudentGroups();
-        }
         return faculty;
     }
 
