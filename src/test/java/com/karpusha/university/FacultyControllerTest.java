@@ -1,6 +1,8 @@
 package com.karpusha.university;
 
+import com.karpusha.university.controller.FacultyController;
 import com.karpusha.university.controller.FacultyRestController;
+import com.karpusha.university.dao.FacultyRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,19 @@ public class FacultyControllerTest {
 
     @Autowired
     FacultyRestController facultyRestController;
+
+    @Autowired
+    FacultyController facultyController;
+
+    @Autowired
+    FacultyRepository facultyRepository;
+
     @Autowired
     private MockMvc mockMvc;
 
 
     @Test
-    public void getAllFacultiesTest() throws Exception {
+    public void getAllFacultiesRestTest() throws Exception {
         mockMvc.perform(get("/api/faculties"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -41,8 +50,11 @@ public class FacultyControllerTest {
                 .andExpect(jsonPath("$[1].name", is("HR")))
                 .andExpect(jsonPath("$[2].id", is(3)))
                 .andExpect(jsonPath("$[2].name", is("QA")));
+    }
 
-
+    @Test
+    public void getAllFacultiesTest() throws Exception {
+        facultyRepository.findAll();
     }
 
 }
