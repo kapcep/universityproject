@@ -1,5 +1,7 @@
 package com.karpusha.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -31,6 +33,7 @@ public class Teacher {
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id")
+    @JsonBackReference
     private Department department;
 
     public Teacher() {

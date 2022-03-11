@@ -1,5 +1,7 @@
 package com.karpusha.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -22,6 +24,7 @@ public class Faculty {
     private String name;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<StudentGroup> studentGroups;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)

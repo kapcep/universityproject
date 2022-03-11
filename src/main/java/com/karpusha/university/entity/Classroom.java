@@ -1,5 +1,7 @@
 package com.karpusha.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -20,6 +22,7 @@ public class Classroom {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "department_id")
+    @JsonBackReference
     private Department department;
 
     public Classroom() {
