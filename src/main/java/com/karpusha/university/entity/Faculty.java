@@ -28,6 +28,7 @@ public class Faculty {
     private List<StudentGroup> studentGroups;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Department> departments;
 
 
