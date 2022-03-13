@@ -87,6 +87,10 @@ public class FacultyController {
     @GetMapping("/getStudentGroupsInFaculty/{id}")
     public String getStudentGroupsInFaculty(@PathVariable("id") int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
+        if (faculty == null) {
+            LOG.error("Faculty not found in database");
+            throw new FacultyIsNullException("Faculty error", "Faculty is not found in database");
+        }
         List<StudentGroup> studentGroups = faculty.getStudentGroups();
         model.addAttribute("allStudentGroups", studentGroups);
 

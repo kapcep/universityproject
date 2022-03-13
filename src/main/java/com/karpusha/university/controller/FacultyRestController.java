@@ -1,9 +1,12 @@
 package com.karpusha.university.controller;
 
+import com.karpusha.university.entity.Department;
 import com.karpusha.university.entity.Faculty;
+import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.exception.FacultyIsNullException;
 import com.karpusha.university.service.FacultyServiceRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,5 +53,19 @@ public class FacultyRestController {
         }
         facultyService.deleteFaculty(id);
         return "Faculty with id = " + id + " was deleted";
+    }
+
+    @GetMapping("/faculties/studentGroups/{id}")
+    public List<StudentGroup> getStudentGroupsInFaculty(@PathVariable("id") int id) {
+        Faculty faculty = facultyService.getFaculty(id);
+        List<StudentGroup> studentGroups = faculty.getStudentGroups();
+        return studentGroups;
+    }
+
+    @GetMapping("/faculties/departments/{id}")
+    public List<Department> getDepartmentsInFaculty(@PathVariable("id") int id, Model model) {
+        Faculty faculty = facultyService.getFaculty(id);
+        List<Department> departments = faculty.getDepartments();
+        return departments;
     }
 }
