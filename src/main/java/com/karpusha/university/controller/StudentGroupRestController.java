@@ -4,7 +4,6 @@ import com.karpusha.university.entity.Student;
 import com.karpusha.university.entity.StudentGroup;
 import com.karpusha.university.service.StudentGroupServiceRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class StudentGroupRestController {
     StudentGroupServiceRepositoryImpl studentGroupService;
 
     @GetMapping("/studentGroups")
-    public List<StudentGroup> getAllStudentGroups(Model model) {
+    public List<StudentGroup> getAllStudentGroups() {
         List<StudentGroup> allStudentGroups = studentGroupService.getAllStudentGroups();
         return allStudentGroups;
     }
@@ -37,7 +36,7 @@ public class StudentGroupRestController {
     }
 
     @DeleteMapping("/studentGroups/{groupId}")
-    public String deleteFaculty(@PathVariable("groupId") int studentGroupId) {
+    public String deleteStudentGroup(@PathVariable("groupId") int studentGroupId) {
         studentGroupService.deleteStudentGroup(studentGroupId);
         return "StudentGroup with id = " + studentGroupId + " was deleted";
     }
