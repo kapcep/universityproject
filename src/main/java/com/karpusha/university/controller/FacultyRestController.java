@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/faculties")
 public class FacultyRestController {
 
     @Autowired
     FacultyServiceRepositoryImpl facultyService;
 
-    @GetMapping("/faculties")
+    @GetMapping("")
     public List<Faculty> showAllFaculties() {
         List<Faculty> allFaculties = facultyService.getAllFaculties();
         return allFaculties;
     }
 
-    @GetMapping("/faculties/{id}")
+    @GetMapping("/{id}")
     public Faculty getFaculty(@PathVariable int id) {
         Faculty faculty = facultyService.getFaculty(id);
         if (faculty == null) {
@@ -33,19 +33,19 @@ public class FacultyRestController {
         return faculty;
     }
 
-    @PostMapping("/faculties")
+    @PostMapping("")
     public Faculty saveFaculty(@RequestBody Faculty faculty) {
         facultyService.saveFaculty(faculty);
         return faculty;
     }
 
-    @PutMapping("/faculties")
+    @PutMapping("")
     public Faculty editFaculty(@RequestBody Faculty faculty) {
         facultyService.saveFaculty(faculty);
         return faculty;
     }
 
-    @DeleteMapping("/faculties/{id}")
+    @DeleteMapping("/{id}")
     public String deleteFaculty(@PathVariable("id") int id) {
         Faculty faculty = facultyService.getFaculty(id);
         if (faculty == null) {
@@ -55,14 +55,14 @@ public class FacultyRestController {
         return "Faculty with id = " + id + " was deleted";
     }
 
-    @GetMapping("/faculties/studentGroups/{id}")
+    @GetMapping("/studentGroups/{id}")
     public List<StudentGroup> getStudentGroupsInFaculty(@PathVariable("id") int id) {
         Faculty faculty = facultyService.getFaculty(id);
         List<StudentGroup> studentGroups = faculty.getStudentGroups();
         return studentGroups;
     }
 
-    @GetMapping("/faculties/departments/{id}")
+    @GetMapping("/departments/{id}")
     public List<Department> getDepartmentsInFaculty(@PathVariable("id") int id, Model model) {
         Faculty faculty = facultyService.getFaculty(id);
         List<Department> departments = faculty.getDepartments();

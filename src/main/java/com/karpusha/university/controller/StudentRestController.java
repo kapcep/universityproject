@@ -8,25 +8,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/students")
 public class StudentRestController {
     @Autowired
     private StudentServiceRepositoryImpl studentService;
 
 
-    @GetMapping("/students")
+    @GetMapping("")
     public List<Student> showAllStudents() {
         List<Student> allStudents = studentService.getAllStudents();
         return allStudents;
     }
 
-    @GetMapping("/student/{studentId}")
+    @GetMapping("/{studentId}")
     public Student getStudent(@PathVariable("studentId") int studentId) {
         Student student = studentService.getStudent(studentId);
         return student;
     }
 
-    @PostMapping("/students/{studentGroupId}")
+    @PostMapping("/{studentGroupId}")
     public Student saveStudent(@PathVariable("studentGroupId")
                                        int studentGroupId,
                                @RequestBody Student student) {
@@ -34,14 +34,14 @@ public class StudentRestController {
         return student;
     }
 
-    @PutMapping("/students/{studentGroupId}")
+    @PutMapping("/{studentGroupId}")
     public Student updateStudent(@PathVariable("studentGroupId") int studentGroupId,
                                  @RequestBody Student student) {
         studentService.saveStudent(student, studentGroupId);
         return student;
     }
 
-    @DeleteMapping("/students/{studentId}")
+    @DeleteMapping("/{studentId}")
     public String deleteStudent(@PathVariable("studentId") int studentId) {
         studentService.deleteStudent(studentId);
         return "Student with id = " + studentId + " was deleted";

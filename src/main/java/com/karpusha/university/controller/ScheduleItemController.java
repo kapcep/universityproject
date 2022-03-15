@@ -78,7 +78,7 @@ public class ScheduleItemController {
     }
 
     @GetMapping("/deleteScheduleItem/{scheduleItemId}")
-    public String deleteFaculty(@PathVariable("scheduleItemId") int scheduleItemId, Model model) {
+    public String deleteScheduleItem(@PathVariable("scheduleItemId") int scheduleItemId, Model model) {
         scheduleItemService.deleteScheduleItem(scheduleItemId);
         return "redirect:/getAllScheduleItems";
     }
