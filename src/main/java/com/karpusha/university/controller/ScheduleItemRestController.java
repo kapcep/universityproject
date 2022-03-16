@@ -5,7 +5,6 @@ import com.karpusha.university.dto.ScheduleItemDto;
 import com.karpusha.university.entity.ScheduleItem;
 import com.karpusha.university.entity.Student;
 import com.karpusha.university.service.ScheduleItemServiceRepositoryImpl;
-import com.karpusha.university.service.StudentServiceImpl;
 import com.karpusha.university.service.StudentServiceRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,8 @@ public class ScheduleItemRestController {
     @Autowired
     ScheduleItemServiceRepositoryImpl scheduleItemService;
 
-    StudentServiceImpl studentService;
+    @Autowired
+    StudentServiceRepositoryImpl studentService;
 
     @GetMapping("")
     public List<ScheduleItem> showAllScheduleItems() {
@@ -68,6 +68,53 @@ public class ScheduleItemRestController {
         scheduleItems = scheduleItems
                 .stream()
                 .filter(s -> s.getStudentGroup().getId() == studentGroupId &&
+                        dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
+                .collect(Collectors.toList());
+
+        return scheduleItems;
+    }
+
+    @GetMapping("/studentMonth/{studentId}")
+    public List<ScheduleItem> getStudentMonthSchedule(@PathVariable("studentId") int studentId,
+                                                      @RequestBody DatePickerDto datePickerDto) {
+        Student student = studentService.getStudent(studentId);
+        int studentGroupId = student.getStudentGroup().getId();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        scheduleItems = scheduleItems
+                .stream()
+                .filter(s -> s.getStudentGroup().getId() == studentGroupId &&
+                        dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
+                .collect(Collectors.toList());
+
+        return scheduleItems;
+    }
+
+    @GetMapping("/teacherDay/{teacherId}")
+    public List<ScheduleItem> getTeacherDaySchedule(@PathVariable("teacherId") int teacherId,
+                                                    @RequestBody DatePickerDto datePickerDto) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        scheduleItems = scheduleItems
+                .stream()
+                .filter(s -> s.getTeacher().getId() == teacherId &&
+                        dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
+                .collect(Collectors.toList());
+
+        return scheduleItems;
+    }
+
+    @GetMapping("/teacherMonth/{teacherId}")
+    public List<ScheduleItem> getTeacherMonthSchedule(@PathVariable("teacherId") int teacherId,
+                                                      @RequestBody DatePickerDto datePickerDto) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        List<ScheduleItem> scheduleItems = scheduleItemService.getAllScheduleItems();
+        scheduleItems = scheduleItems
+                .stream()
+                .filter(s -> s.getTeacher().getId() == teacherId &&
                         dateFormat.format(s.getBeginTime()).equals(datePickerDto.getChosenDate()))
                 .collect(Collectors.toList());
 
